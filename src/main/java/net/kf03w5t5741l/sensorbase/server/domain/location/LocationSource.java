@@ -4,5 +4,6 @@ public enum LocationSource {
     GPS,
     WiFi,
     IP,
-    user
+    user,
+    zero
 }

@@ -39,6 +39,10 @@ public class Location {
         this(latitude, longitude, DEFAULT_ALTITUDE, source);
     }
 
+    public Location() {
+        this(0, 0, 0, LocationSource.zero);
+    }
+
     public double getLatitude() {
         return this.latitude;
     }
