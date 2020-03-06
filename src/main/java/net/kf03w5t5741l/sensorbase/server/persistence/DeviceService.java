@@ -27,7 +27,7 @@ public class DeviceService {
         return deviceRepository.findAll();
     }
 
-    public boolean removeById(Long id) {
+    public boolean deleteById(Long id) {
         if (deviceRepository.existsById(id)) {
             deviceRepository.deleteById(id);
             return true;
