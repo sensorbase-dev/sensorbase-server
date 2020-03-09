@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import net.kf03w5t5741l.sensorbase.server.persistence.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 
 @RestController
