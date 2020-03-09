@@ -6,6 +6,10 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.Actuator;
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.DeviceComponent;
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.Servo;
 import net.kf03w5t5741l.sensorbase.server.domain.location.Location;
 
 @Entity
