@@ -19,6 +19,10 @@ public class DeviceService {
         return deviceRepository.save(device);
     }
 
+    public boolean existsById(Long id) {
+        return existsById(id);
+    }
+
     public Optional<Device> findById(Long id) {
         return deviceRepository.findById(id);
     }

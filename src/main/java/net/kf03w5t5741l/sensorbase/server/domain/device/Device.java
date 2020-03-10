@@ -15,12 +15,12 @@ import net.kf03w5t5741l.sensorbase.server.domain.location.Location;
 @Entity
 public class Device {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    //@GeneratedValue(strategy= GenerationType.AUTO)
     @NotNull
     private Long id;
 
     private String name;
-    private long serialNumber;
+    //private long serialNumber;
     private long publicKey;
 
     @OneToOne
@@ -51,13 +51,17 @@ public class Device {
         this.name = name;
     }
 
+    /*
     public long getSerialNumber() {
         return this.serialNumber;
     }
+     */
 
+    /*
     public void setSerialNumber(long serialNumber) {
         this.serialNumber = serialNumber;
     }
+     */
 
     public long getPublicKey() {
         return this.publicKey;
