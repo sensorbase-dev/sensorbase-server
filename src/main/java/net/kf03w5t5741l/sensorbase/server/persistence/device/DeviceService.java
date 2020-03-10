@@ -20,7 +20,7 @@ public class DeviceService {
     }
 
     public boolean existsById(Long id) {
-        return existsById(id);
+        return deviceRepository.existsById(id);
     }
 
     public Optional<Device> findById(Long id) {
