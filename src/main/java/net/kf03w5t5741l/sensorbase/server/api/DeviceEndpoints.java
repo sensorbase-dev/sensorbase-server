@@ -1,8 +1,11 @@
 package net.kf03w5t5741l.sensorbase.server.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
@@ -25,8 +28,20 @@ public class DeviceEndpoints {
     }
 
     @PostMapping
-    public Device createDevice(@RequestBody Device device) {
-        return this.deviceService.save(device);
+    public ResponseEntity<Device> createDevice(@RequestBody Device device) {
+        if (device.getId() == 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Invalid device id");
+        }
+
+        if (deviceService.existsById(device.getId())) {
+            Device existingDevice
+                    = deviceService.findById(device.getId()).get();
+            return new ResponseEntity<Device>(existingDevice, HttpStatus.OK);
+        }
+
+        this.deviceService.save(device);
+        return new ResponseEntity<Device>(device, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
