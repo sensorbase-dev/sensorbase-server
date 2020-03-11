@@ -56,4 +56,9 @@ public class DeviceEndpoints {
         return this.deviceService.deleteById(id);
     }
 
+    @DeleteMapping
+    public void deleteAll() {
+        this.deviceService.deleteAll();
+    }
+
 }
