@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,6 +37,24 @@ public class SensorReadingEndpoints {
     @GetMapping("/{id}")
     public SensorReading getSensorReading(@PathVariable Long id){
         return this.sensorReadingService.findById(id).get();
+    }
+
+    @GetMapping("/gteq/{value}")
+    public List<SensorReading> getSensorReadingsGtEq(
+            @PathVariable Integer value) {
+        return this.sensorReadingService.findValueGtEq(value);
+    }
+
+    @GetMapping("/latest")
+    public SensorReading getLatestSensorReading() {
+        return this.sensorReadingService.findLatest();
+    }
+
+    @GetMapping("/latest/{sensorId}")
+    public Optional<SensorReading> getLatestSensorReading(
+            @PathVariable Long sensorId) {
+        Sensor sensor = this.sensorService.findById(sensorId).get();
+        return this.sensorReadingService.findLatest(sensor);
     }
 
     @PostMapping

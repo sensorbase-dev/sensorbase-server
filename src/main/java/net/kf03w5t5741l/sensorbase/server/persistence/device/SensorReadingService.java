@@ -1,7 +1,9 @@
 package net.kf03w5t5741l.sensorbase.server.persistence.device;
 
+import java.util.List;
 import java.util.Optional;
 
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,29 @@ public class SensorReadingService {
 
     public Iterable<SensorReading> findAll() {
         return this.sensorReadingRepository.findAll();
+    }
+
+    public List<SensorReading> findValueGtEq(Integer value) {
+        return this.sensorReadingRepository.findValueGtEq(value);
+    }
+
+    public List<SensorReading> findAllByTimeDesc() {
+        return this.sensorReadingRepository.findAllByTimeDesc();
+    }
+
+    public SensorReading findLatest() {
+        List<SensorReading> allSensorReadingsByTimeDesc
+                = this.findAllByTimeDesc();
+
+        if (allSensorReadingsByTimeDesc.isEmpty()) {
+            return null;
+        }
+
+        return allSensorReadingsByTimeDesc.get(0);
+    }
+
+    public Optional<SensorReading> findLatest(Sensor sensor) {
+        return this.sensorReadingRepository.findLatest(sensor);
     }
 
     public boolean deleteById(Long id) {

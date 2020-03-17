@@ -12,5 +12,4 @@ import java.util.Optional;
 public interface SensorRepository extends CrudRepository<Sensor, Long> {
     public Optional<Sensor> findByParentDeviceAndComponentNumber(
             Device parentDevice, Integer componentNumber);
-
 }

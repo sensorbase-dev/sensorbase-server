@@ -23,8 +23,8 @@ public class SensorService {
         return this.sensorRepository.save(sensor);
     }
 
-    public Optional<Sensor> findById(Long id) {
-        return sensorRepository.findById(id);
+    public Optional<Sensor> findById(Long sensorId) {
+        return sensorRepository.findById(sensorId);
     }
 
     public Optional<Sensor> findByParentDeviceAndComponentNumber(
@@ -37,9 +37,9 @@ public class SensorService {
         return sensorRepository.findAll();
     }
 
-    public boolean deleteById(Long id) {
-        if (sensorRepository.existsById(id)) {
-            sensorRepository.deleteById(id);
+    public boolean deleteById(Long sensorId) {
+        if (sensorRepository.existsById(sensorId)) {
+            sensorRepository.deleteById(sensorId);
             return true;
         } else {
             return false;

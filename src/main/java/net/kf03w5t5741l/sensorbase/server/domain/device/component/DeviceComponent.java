@@ -9,7 +9,7 @@ public abstract class DeviceComponent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long sensorId;
 
     // Component's number within the physical device
     private Integer componentNumber;
@@ -17,8 +17,8 @@ public abstract class DeviceComponent {
     @ManyToOne
     private Device parentDevice;
 
-    public Long getId() {
-        return this.id;
+    public Long getSensorId() {
+        return this.sensorId;
     }
 
     /* Takes any Long as the physical device component's id, then hashes it with
@@ -27,8 +27,8 @@ public abstract class DeviceComponent {
      * because the device id is already unique. Hashing should guarantee a
      * unique object id for sensor records in the database.
      */
-    public void setId(Long id) {
-        this.id = id;
+    public void setSensorId(Long sensorId) {
+        this.sensorId = sensorId;
     }
 
     public Integer getComponentNumber() {

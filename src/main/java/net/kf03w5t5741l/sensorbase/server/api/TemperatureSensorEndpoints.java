@@ -32,7 +32,7 @@ public class TemperatureSensorEndpoints {
     @PostMapping
     public TemperatureSensor createTemperatureSensor(
             @RequestBody TemperatureSensor temperatureSensor) {
-        long parentDeviceId = temperatureSensor.getId() / 100;
+        long parentDeviceId = temperatureSensor.getSensorId() / 100;
         Device parentDevice = this.deviceService.findById(parentDeviceId).get();
         temperatureSensor.setParentDevice(parentDevice);
         parentDevice.addSensor((temperatureSensor));
@@ -43,7 +43,7 @@ public class TemperatureSensorEndpoints {
     public TemperatureSensor updateTemperatureSensor(
             @PathVariable Long id,
             @RequestBody TemperatureSensor temperatureSensor) {
-        temperatureSensor.setId(id);
+        temperatureSensor.setSensorId(id);
         return this.temperatureSensorService.save(temperatureSensor);
     }
 
