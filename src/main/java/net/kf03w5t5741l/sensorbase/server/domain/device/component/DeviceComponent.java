@@ -3,32 +3,48 @@ package net.kf03w5t5741l.sensorbase.server.domain.device.component;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public abstract class DeviceComponent {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     private Long id;
 
+    // Component's number within the physical device
+    private Integer componentNumber;
+
     @ManyToOne
-    private Device device;
+    private Device parentDevice;
 
     public Long getId() {
         return this.id;
     }
 
+    /* Takes any Long as the physical device component's id, then hashes it with
+     * the parent device's id field to produce a unique virtual sensor id for
+     * the database. The argument given to setId() does not need to be unique,
+     * because the device id is already unique. Hashing should guarantee a
+     * unique object id for sensor records in the database.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Device getDevice() {
-        return this.device;
+    public Integer getComponentNumber() {
+        return this.componentNumber;
     }
 
-    public void setDevice(Device device) {
-        this.device = device;
+    public void setComponentNumber(Integer componentNumber) {
+        this.componentNumber = componentNumber;
+    }
+
+    public Device getParentDevice() {
+        return this.parentDevice;
+    }
+
+    public void setParentDevice(Device parentDevice) {
+        this.parentDevice = parentDevice;
     }
 
     public Class<? extends DeviceComponent> getComponentClass() {

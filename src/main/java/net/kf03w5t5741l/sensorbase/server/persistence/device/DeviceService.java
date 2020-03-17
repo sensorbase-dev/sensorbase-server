@@ -27,6 +27,10 @@ public class DeviceService {
         return this.deviceRepository.findById(id);
     }
 
+    public Optional<Device> findBySerialNumber(Long serialNumber) {
+        return this.deviceRepository.findBySerialNumber(serialNumber);
+    }
+
     public Iterable<Device> findAll() {
         return this.deviceRepository.findAll();
     }

@@ -1,11 +1,11 @@
 package net.kf03w5t5741l.sensorbase.server.domain.device;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Actuator;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.DeviceComponent;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
@@ -14,32 +14,41 @@ import net.kf03w5t5741l.sensorbase.server.domain.location.Location;
 
 @Entity
 public class Device {
+
     @Id
-    //@GeneratedValue(strategy= GenerationType.AUTO)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
+    private long serialNumber;
+
     private String name;
-    //private long serialNumber;
     private long publicKey;
 
-    @OneToOne
+    @ManyToOne
     private Location location;
 
     @OneToMany
-    private List<Sensor> sensors = new ArrayList<Sensor>();
+    private Set<Sensor> sensors = new HashSet<Sensor>();
 
     @OneToMany
-    private List<Actuator> actuators = new ArrayList<Actuator>();
+    private Set<Actuator> actuators = new HashSet<Actuator>();
 
     @OneToMany
-    private List<Servo> servos = new ArrayList<Servo>();
+    private Set<Servo> servos = new HashSet<Servo>();
 
     public Long getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    /* Takes any id provided by the physical device as its record id in the
+     * database.
+     *
+     * Take special care: the physical device is responsible for providing
+     * a unique id, not the SensorBase-server application. This is implemented
+     * on the hardware device by using its hardcoded serial number as id.
+     */
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -51,17 +60,13 @@ public class Device {
         this.name = name;
     }
 
-    /*
     public long getSerialNumber() {
         return this.serialNumber;
     }
-     */
 
-    /*
     public void setSerialNumber(long serialNumber) {
         this.serialNumber = serialNumber;
     }
-     */
 
     public long getPublicKey() {
         return this.publicKey;
@@ -79,23 +84,31 @@ public class Device {
         this.location = location;
     }
 
-    public List<Sensor> getSensors() {
+    @JsonIgnore
+    public Set<Sensor> getSensors() {
         return this.sensors;
     }
 
-    public List<Actuator> getActuators() {
+    @JsonIgnore
+    public Set<Actuator> getActuators() {
         return this.actuators;
     }
 
-    public List<Servo> getServos() {
+    @JsonIgnore
+    public Set<Servo> getServos() {
         return this.servos;
     }
 
-    public List<DeviceComponent> getComponents() {
-        List<DeviceComponent> components = new ArrayList<DeviceComponent>();
+    @JsonIgnore
+    public Set<DeviceComponent> getComponents() {
+        Set<DeviceComponent> components = new HashSet<DeviceComponent>();
         components.addAll(sensors);
         components.addAll(actuators);
         components.addAll(servos);
         return components;
+    }
+
+    public void addSensor(Sensor sensor) {
+        this.sensors.add(sensor);
     }
 }

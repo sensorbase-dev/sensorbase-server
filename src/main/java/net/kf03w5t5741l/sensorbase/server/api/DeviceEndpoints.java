@@ -1,5 +1,6 @@
 package net.kf03w5t5741l.sensorbase.server.api;
 
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.DeviceComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,9 +10,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
+
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
-@RequestMapping("/api/device")
+@RequestMapping("/api/devices")
 public class DeviceEndpoints {
 
     @Autowired
@@ -22,38 +27,48 @@ public class DeviceEndpoints {
         return this.deviceService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Device readDevice(@PathVariable Long id) {
-        return this.deviceService.findById(id).get();
+    @GetMapping("/{deviceId}")
+    public Device readDevice(@PathVariable Long deviceId) {
+        return this.deviceService.findById(deviceId).get();
+    }
+
+    @GetMapping("/{deviceId}/components")
+    public Set<DeviceComponent> readDeviceComponents(
+            @PathVariable Long deviceId) {
+        return this
+                .deviceService
+                .findById(deviceId)
+                .get()
+                .getComponents();
     }
 
     @PostMapping
     public ResponseEntity<Device> createDevice(@RequestBody Device device) {
-        if (device.getId() == 0) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Invalid device id");
+        if (device.getSerialNumber() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Invalid serial number");
         }
 
-        if (deviceService.existsById(device.getId())) {
-            Device existingDevice
-                    = deviceService.findById(device.getId()).get();
-            return new ResponseEntity<Device>(existingDevice, HttpStatus.OK);
+        Optional<Device> existingDeviceOptional = this.deviceService.findBySerialNumber(device.getSerialNumber());
+        if (existingDeviceOptional.isPresent()) {
+            return new ResponseEntity<Device>(existingDeviceOptional.get(),
+                    HttpStatus.OK);
         }
 
         this.deviceService.save(device);
         return new ResponseEntity<Device>(device, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public Device updateDevice(@PathVariable Long id,
+    @PutMapping("/{deviceId}")
+    public Device updateDevice(@PathVariable Long deviceId,
                                @RequestBody Device device) {
-        device.setId(id);
+        device.setId(deviceId);
         return this.deviceService.save(device);
     }
 
-    @DeleteMapping("/{id}")
-    public boolean deleteDevice(@RequestParam Long id) {
-        return this.deviceService.deleteById(id);
+    @DeleteMapping("/{deviceId}")
+    public boolean deleteDevice(@RequestParam Long deviceId) {
+        return this.deviceService.deleteById(deviceId);
     }
 
     @DeleteMapping
