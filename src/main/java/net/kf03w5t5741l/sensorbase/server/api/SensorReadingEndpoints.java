@@ -62,7 +62,7 @@ public class SensorReadingEndpoints {
             @RequestBody SensorReading sensorReading,
             @RequestParam Long deviceSerialNumber,
             @RequestParam Integer componentNumber) {
-        Optional<Device> deviceOptional = this.deviceService.findBySerialNumber(
+        Optional<Device> deviceOptional = this.deviceService.findByHardwareUid(
                 deviceSerialNumber);
 
         if (!deviceOptional.isPresent()) {

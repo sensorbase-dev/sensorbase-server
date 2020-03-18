@@ -28,6 +28,10 @@ public class SensorReadingService {
         return this.sensorReadingRepository.findAll();
     }
 
+    public List<SensorReading> findBySensorOrderByTimeDesc(Sensor sensor) {
+        return this.sensorReadingRepository.findBySensorOrderByTimeDesc(sensor);
+    }
+
     public List<SensorReading> findValueGtEq(Integer value) {
         return this.sensorReadingRepository.findValueGtEq(value);
     }
@@ -58,6 +62,10 @@ public class SensorReadingService {
         } else {
             return false;
         }
+    }
+
+    public void deleteAllBySensor(Sensor sensor) {
+        this.sensorReadingRepository.deleteAllBySensor(sensor);
     }
 
     public void deleteAll() {

@@ -17,10 +17,10 @@ public class Device {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long deviceId;
 
     @Column(unique = true)
-    private long serialNumber;
+    private Long hardwareUid;
 
     private String name;
     private long publicKey;
@@ -37,8 +37,8 @@ public class Device {
     @OneToMany
     private Set<Servo> servos = new HashSet<Servo>();
 
-    public Long getId() {
-        return this.id;
+    public Long getDeviceId() {
+        return this.deviceId;
     }
 
     /* Takes any id provided by the physical device as its record id in the
@@ -48,8 +48,8 @@ public class Device {
      * a unique id, not the SensorBase-server application. This is implemented
      * on the hardware device by using its hardcoded serial number as id.
      */
-    public void setId(long id) {
-        this.id = id;
+    public void setDeviceId(long deviceId) {
+        this.deviceId = deviceId;
     }
 
     public String getName() {
@@ -60,12 +60,12 @@ public class Device {
         this.name = name;
     }
 
-    public long getSerialNumber() {
-        return this.serialNumber;
+    public Long getHardwareUid() {
+        return this.hardwareUid;
     }
 
-    public void setSerialNumber(long serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setHardwareUid(Long hardwareUid) {
+        this.hardwareUid = hardwareUid;
     }
 
     public long getPublicKey() {

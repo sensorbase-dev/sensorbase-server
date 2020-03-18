@@ -1,19 +1,16 @@
-package net.kf03w5t5741l.sensorbase.server.api;
+package net.kf03w5t5741l.sensorbase.server.api.sensor;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.persistence.device.SensorService;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.xml.ws.Response;
 import java.util.Optional;
 
 @RestController
@@ -41,7 +38,7 @@ public class SensorEndpoints {
             @RequestParam Long deviceSerialNumber,
             @RequestBody Sensor sensor) {
 
-        Optional<Device> deviceOptional = this.deviceService.findBySerialNumber(
+        Optional<Device> deviceOptional = this.deviceService.findByHardwareUid(
                 deviceSerialNumber);
 
         if (!deviceOptional.isPresent()) {

@@ -13,11 +13,13 @@ import java.util.Optional;
 @Component
 public interface SensorReadingRepository
         extends CrudRepository<SensorReading, Long> {
+    public List<SensorReading> findBySensorOrderByTimeDesc(Sensor sensor);
+
     // JPQL: voordeel - database-agnostic
     @Query("select sr from SensorReading sr where sr.value >= ?1")
     public List<SensorReading> findValueGtEq(Integer value);
 
-    @Query("select sr from SensorReading sr order by sr.time ")
+    @Query("select sr from SensorReading sr order by sr.time desc")
     public List<SensorReading> findAllByTimeDesc();
 
     // MySQL: dus echt afhankelijk van onderliggende database
@@ -25,4 +27,6 @@ public interface SensorReadingRepository
                     + " ORDER BY time DESC LIMIT 1",
             nativeQuery = true)
     public Optional<SensorReading> findLatest(Sensor sensor);
+
+    public void deleteAllBySensor(Sensor sensor);
 }

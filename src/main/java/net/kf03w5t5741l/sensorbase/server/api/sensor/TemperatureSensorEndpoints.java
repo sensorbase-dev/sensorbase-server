@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server.api;
+package net.kf03w5t5741l.sensorbase.server.api.sensor;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import org.springframework.beans.factory.annotation.Autowired;

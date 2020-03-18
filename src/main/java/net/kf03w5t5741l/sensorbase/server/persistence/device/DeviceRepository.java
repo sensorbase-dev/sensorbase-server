@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Component
 public interface DeviceRepository extends CrudRepository<Device, Long> {
-    public Optional<Device> findBySerialNumber(Long serialNumber);
+    public Optional<Device> findByHardwareUid(Long hardwareUid);
 }

@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server.api;
+package net.kf03w5t5741l.sensorbase.server.api.device;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/devices/{deviceId}/sensors")
+@RequestMapping("/api/devices/{hardwareUid}/sensors")
 public class DeviceSensorEndpoints {
     @Autowired
     private DeviceService deviceService;
@@ -22,20 +22,20 @@ public class DeviceSensorEndpoints {
     private SensorService sensorService;
 
     @GetMapping
-    public Iterable<Sensor> getSensors(@PathVariable Long deviceId) {
+    public Iterable<Sensor> getSensors(@PathVariable Long hardwareUid) {
         return this
                 .deviceService
-                .findById(deviceId)
+                .findByHardwareUid(hardwareUid)
                 .get()
                 .getSensors();
     }
 
-    @GetMapping("/{sensorId}")
-    public Sensor getSensor(@PathVariable Long serialNumber,
+    @GetMapping("/{componentNumber}")
+    public Sensor getSensor(@PathVariable Long hardwareUid,
                             @PathVariable Integer componentNumber) {
         Device parentDevice = this
                 .deviceService
-                .findBySerialNumber(serialNumber)
+                .findByHardwareUid(hardwareUid)
                 .get();
         return this.sensorService.findByParentDeviceAndComponentNumber(
                 parentDevice, componentNumber).get();
@@ -43,15 +43,15 @@ public class DeviceSensorEndpoints {
 
     @PostMapping
     public ResponseEntity<Sensor> saveSensor (
-            @PathVariable Long serialNumber,
+            @PathVariable Long hardwareUid,
             @RequestBody Sensor sensor) {
 
-        Optional<Device> deviceOptional = this.deviceService.findBySerialNumber(
-                serialNumber);
+        Optional<Device> deviceOptional = this.deviceService.findByHardwareUid(
+                hardwareUid);
 
         if (!deviceOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Device with serial number " + serialNumber
+                    "Device with hardware UID " + hardwareUid
                             + " not registered.");
         }
         sensor.setParentDevice(deviceOptional.get());
@@ -73,20 +73,20 @@ public class DeviceSensorEndpoints {
     }
 
     @DeleteMapping("/{componentNumber}")
-    public boolean deleteSensor(@PathVariable Long serialNumber,
+    public boolean deleteSensor(@PathVariable Long hardwareUid,
                                 @PathVariable Integer componentNumber) {
-        Device parentDevice = this.deviceService.findBySerialNumber(
-                serialNumber).get();
+        Device parentDevice = this.deviceService.findByHardwareUid(
+                hardwareUid).get();
         Long sensorId = this.sensorService.findByParentDeviceAndComponentNumber(
                 parentDevice, componentNumber).get().getSensorId();
         return this.sensorService.deleteById(sensorId);
     }
 
     @DeleteMapping
-    public void deleteAllSensors(@PathVariable Long serialNumber) {
+    public void deleteAllSensors(@PathVariable Long hardwareUid) {
         Iterable<Sensor> sensorsToDelete = this
                 .deviceService
-                .findBySerialNumber(serialNumber)
+                .findByHardwareUid(hardwareUid)
                 .get()
                 .getSensors();
         for (Sensor sensor : sensorsToDelete) {
