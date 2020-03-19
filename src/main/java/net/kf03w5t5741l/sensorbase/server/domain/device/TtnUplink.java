@@ -1,6 +1,8 @@
 package net.kf03w5t5741l.sensorbase.server.domain.device;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import java.time.ZonedDateTime;
 import java.util.Map;
 
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class TtnUplink {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
