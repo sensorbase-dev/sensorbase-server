@@ -31,6 +31,14 @@ public class TtnUplink {
         this.time = ZonedDateTime.parse(timeString);
     }
 
+    public Long getTtnUplinkId() {
+        return this.ttnUplinkId;
+    }
+
+    public void setTtnUplinkId(Long ttnUplinkId) {
+        this.ttnUplinkId = ttnUplinkId;
+    }
+
     public String getHardwareSerial() {
         return this.hardwareSerial;
     }
@@ -45,5 +53,13 @@ public class TtnUplink {
 
     public void setPayloadRaw(String payloadRaw) {
         this.payloadRaw = payloadRaw;
+    }
+
+    public ZonedDateTime getTime() {
+        return this.time;
+    }
+
+    public void setTime(ZonedDateTime time) {
+        this.time = time;
     }
 }
