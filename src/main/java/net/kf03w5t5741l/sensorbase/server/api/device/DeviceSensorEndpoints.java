@@ -4,6 +4,7 @@ import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
 import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class DeviceSensorEndpoints {
     private SensorService sensorService;
 
     @GetMapping
-    public Iterable<Sensor> getSensors(@PathVariable Long hardwareUid) {
+    public Iterable<Sensor> getSensors(@PathVariable String hardwareUid) {
         return this
                 .deviceService
                 .findByHardwareUid(hardwareUid)
@@ -31,8 +32,8 @@ public class DeviceSensorEndpoints {
     }
 
     @GetMapping("/{componentNumber}")
-    public Sensor getSensor(@PathVariable Long hardwareUid,
-                            @PathVariable Integer componentNumber) {
+    public Sensor getSensor(@PathVariable String hardwareUid,
+                            @PathVariable byte componentNumber) {
         Device parentDevice = this
                 .deviceService
                 .findByHardwareUid(hardwareUid)
@@ -43,9 +44,8 @@ public class DeviceSensorEndpoints {
 
     @PostMapping
     public ResponseEntity<Sensor> saveSensor (
-            @PathVariable Long hardwareUid,
+            @PathVariable String hardwareUid,
             @RequestBody Sensor sensor) {
-
         Optional<Device> deviceOptional = this.deviceService.findByHardwareUid(
                 hardwareUid);
 
@@ -73,8 +73,8 @@ public class DeviceSensorEndpoints {
     }
 
     @DeleteMapping("/{componentNumber}")
-    public boolean deleteSensor(@PathVariable Long hardwareUid,
-                                @PathVariable Integer componentNumber) {
+    public boolean deleteSensor(@PathVariable String hardwareUid,
+                                @PathVariable byte componentNumber) {
         Device parentDevice = this.deviceService.findByHardwareUid(
                 hardwareUid).get();
         Long sensorId = this.sensorService.findByParentDeviceAndComponentNumber(
@@ -83,7 +83,7 @@ public class DeviceSensorEndpoints {
     }
 
     @DeleteMapping
-    public void deleteAllSensors(@PathVariable Long hardwareUid) {
+    public void deleteAllSensors(@PathVariable String hardwareUid) {
         Iterable<Sensor> sensorsToDelete = this
                 .deviceService
                 .findByHardwareUid(hardwareUid)

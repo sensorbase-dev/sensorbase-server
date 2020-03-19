@@ -31,7 +31,7 @@ public class SensorReadingEndpoints {
 
     @GetMapping
     public Iterable<SensorReading> getAllSensorReadings() {
-        return this.sensorReadingService.findAll();
+        return this.sensorReadingService.findAllByTimeDesc();
     }
 
     @GetMapping("/{id}")
@@ -60,14 +60,14 @@ public class SensorReadingEndpoints {
     @PostMapping
     public SensorReading createSensorReading(
             @RequestBody SensorReading sensorReading,
-            @RequestParam Long deviceSerialNumber,
-            @RequestParam Integer componentNumber) {
+            @RequestParam String hardwareUid,
+            @RequestParam byte componentNumber) {
         Optional<Device> deviceOptional = this.deviceService.findByHardwareUid(
-                deviceSerialNumber);
+                hardwareUid);
 
         if (!deviceOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Device with serial number " + deviceSerialNumber
+                    "Device with serial number " + hardwareUid
                             + " not found");
         }
 
@@ -79,7 +79,7 @@ public class SensorReadingEndpoints {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Sensor with component number " + componentNumber
                             + " not found in device with serial number "
-                            + deviceSerialNumber);
+                            + hardwareUid);
         }
 
         sensorReading.setSensor(sensorOptional.get());

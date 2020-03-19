@@ -12,7 +12,7 @@ public abstract class DeviceComponent {
     private Long sensorId;
 
     // Component's number within the physical device
-    private Integer componentNumber;
+    private byte componentNumber;
 
     @ManyToOne
     private Device parentDevice;
@@ -31,11 +31,11 @@ public abstract class DeviceComponent {
         this.sensorId = sensorId;
     }
 
-    public Integer getComponentNumber() {
+    public byte getComponentNumber() {
         return this.componentNumber;
     }
 
-    public void setComponentNumber(Integer componentNumber) {
+    public void setComponentNumber(byte componentNumber) {
         this.componentNumber = componentNumber;
     }
 

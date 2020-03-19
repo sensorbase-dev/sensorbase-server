@@ -9,5 +9,6 @@ import java.util.Optional;
 
 @Component
 public interface DeviceRepository extends CrudRepository<Device, Long> {
-    public Optional<Device> findByHardwareUid(Long hardwareUid);
+    public Optional<Device> findByHardwareUid(long hardwareUid);
+    public void deleteByHardwareUid(long hardwareUid);
 }

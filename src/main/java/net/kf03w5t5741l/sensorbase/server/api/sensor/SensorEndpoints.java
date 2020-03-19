@@ -35,15 +35,15 @@ public class SensorEndpoints {
 
     @PostMapping
     public ResponseEntity<Sensor> saveSensor (
-            @RequestParam Long deviceSerialNumber,
+            @RequestParam String hardwareUid,
             @RequestBody Sensor sensor) {
 
         Optional<Device> deviceOptional = this.deviceService.findByHardwareUid(
-                deviceSerialNumber);
+                hardwareUid);
 
         if (!deviceOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Device with serial number " + deviceSerialNumber
+                    "Device with serial number " + hardwareUid
                             + " not registered.");
         }
         sensor.setParentDevice(deviceOptional.get());

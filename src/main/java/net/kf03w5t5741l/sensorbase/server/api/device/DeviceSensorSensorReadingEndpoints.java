@@ -26,8 +26,8 @@ public class DeviceSensorSensorReadingEndpoints {
 
     @GetMapping
     public Iterable<SensorReading> getSensorReadings(
-            @PathVariable long hardwareUid,
-            @PathVariable int componentNumber) {
+            @PathVariable String hardwareUid,
+            @PathVariable byte componentNumber) {
         Device device = this.deviceService.findByHardwareUid(hardwareUid).get();
         Sensor sensor = this.sensorService.findByParentDeviceAndComponentNumber(
                 device, componentNumber).get();
@@ -36,8 +36,8 @@ public class DeviceSensorSensorReadingEndpoints {
 
     @PostMapping
     public SensorReading createSensorReading(
-            @PathVariable long hardwareUid,
-            @PathVariable int componentNumber,
+            @PathVariable String hardwareUid,
+            @PathVariable byte componentNumber,
             @RequestBody SensorReading sensorReading) {
         Device device = this.deviceService.findByHardwareUid(hardwareUid).get();
         Sensor sensor = this
@@ -50,8 +50,8 @@ public class DeviceSensorSensorReadingEndpoints {
     }
 
     @DeleteMapping
-    public void deleteAllSensorReadings(@PathVariable long hardwareUid,
-                                        @PathVariable int componentNumber) {
+    public void deleteAllSensorReadings(@PathVariable String hardwareUid,
+                                        @PathVariable byte componentNumber) {
         Device device = this.deviceService.findByHardwareUid(hardwareUid).get();
         Sensor sensor = this
                 .sensorService
