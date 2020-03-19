@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,9 +81,11 @@ public class SensorReadingEndpoints {
                             + " not found in device with serial number "
                             + hardwareUid);
         }
-
         sensorReading.setSensor(sensorOptional.get());
-        sensorReading.setTime(LocalDateTime.now());
+
+        if (sensorReading.getTime() == null) {
+            sensorReading.setTime(ZonedDateTime.now());
+        }
         return this.sensorReadingService.save(sensorReading);
     }
 

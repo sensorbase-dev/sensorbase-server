@@ -9,7 +9,7 @@ import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @RestController
 @RequestMapping("/api/devices/{hardwareUid}"
@@ -45,7 +45,10 @@ public class DeviceSensorSensorReadingEndpoints {
                 .findByParentDeviceAndComponentNumber(device, componentNumber)
                 .get();
         sensorReading.setSensor(sensor);
-        sensorReading.setTime(LocalDateTime.now());
+
+        if (sensorReading.getTime() == null) {
+            sensorReading.setTime(ZonedDateTime.now());
+        }
         return this.sensorReadingService.save(sensorReading);
     }
 

@@ -1,12 +1,11 @@
 package net.kf03w5t5741l.sensorbase.server.domain;
 
-import net.kf03w5t5741l.sensorbase.server.domain.device.component.DeviceComponent;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.SensorType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 public class SensorReading {
@@ -19,7 +18,7 @@ public class SensorReading {
     private Sensor sensor;
 
     private int value;
-    private LocalDateTime time;
+    private ZonedDateTime time;
 
     public Long getSensorReadingId() {
         return this.sensorReadingId;
@@ -41,11 +40,11 @@ public class SensorReading {
         return this.value;
     }
 
-    public LocalDateTime getTime() {
+    public ZonedDateTime getTime() {
         return this.time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(ZonedDateTime time) {
         this.time = time;
     }
 
