@@ -9,6 +9,7 @@ import javax.persistence.Id;
 public class TtnUplink {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long ttnUplinkId;
 
     private String message;
 
