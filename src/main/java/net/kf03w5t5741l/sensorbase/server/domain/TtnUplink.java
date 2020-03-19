@@ -18,8 +18,8 @@ public class TtnUplink {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ttnUplinkId;
 
-    private String hardwareSerial;
-    private String payloadRaw;
+    private byte[] hardwareSerial;
+    private byte[] payloadRaw;
     private ZonedDateTime time;
 
     /* see here for dealing with nested JSON:
@@ -39,19 +39,19 @@ public class TtnUplink {
         this.ttnUplinkId = ttnUplinkId;
     }
 
-    public String getHardwareSerial() {
+    public byte[] getHardwareSerial() {
         return this.hardwareSerial;
     }
 
-    public void setHardwareSerial(String hardwareSerial) {
+    public void setHardwareSerial(byte[] hardwareSerial) {
         this.hardwareSerial = hardwareSerial;
     }
 
-    public String getPayloadRaw() {
+    public byte[] getPayloadRaw() {
         return this.payloadRaw;
     }
 
-    public void setPayloadRaw(String payloadRaw) {
+    public void setPayloadRaw(byte[] payloadRaw) {
         this.payloadRaw = payloadRaw;
     }
 
