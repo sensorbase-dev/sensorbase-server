@@ -17,9 +17,7 @@ public class TtnEndpoints {
     }
 
     @PostMapping
-    public void saveTtnUplink(@RequestBody String message) {
-        TtnUplink uplink = new TtnUplink();
-        uplink.setMessage(message);
+    public void saveTtnUplink(@RequestBody TtnUplink uplink) {
         this.ttnUplinkService.save(uplink);
     }
 

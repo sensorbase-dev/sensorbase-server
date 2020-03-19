@@ -1,5 +1,6 @@
 package net.kf03w5t5741l.sensorbase.server.service.persistence;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.kf03w5t5741l.sensorbase.server.domain.device.TtnUplink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class TtnUplinkService {
     @Autowired
     private TtnUplinkRepository ttnUplinkRepository;
+
+    @Autowired
+    private ObjectMapper mapper;
 
     public TtnUplink save(TtnUplink uplink) {
         return this.ttnUplinkRepository.save(uplink);
