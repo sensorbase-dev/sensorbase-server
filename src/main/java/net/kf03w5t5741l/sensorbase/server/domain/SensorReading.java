@@ -2,6 +2,7 @@ package net.kf03w5t5741l.sensorbase.server.domain;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.DeviceComponent;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.SensorType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -48,7 +49,7 @@ public class SensorReading {
         this.time = time;
     }
 
-    public Class<? extends DeviceComponent> getType() {
-        return this.sensor.getComponentClass();
+    public SensorType getType() {
+        return this.sensor.getType();
     }
 }
