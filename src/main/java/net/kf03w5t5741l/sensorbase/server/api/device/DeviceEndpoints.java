@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 
 import java.util.Optional;

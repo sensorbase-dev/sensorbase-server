@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server.persistence.device;
+package net.kf03w5t5741l.sensorbase.server.service.persistence;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import org.springframework.data.jpa.repository.Query;
