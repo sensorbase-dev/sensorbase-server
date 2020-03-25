@@ -47,7 +47,6 @@ public class CayenneLppService {
                             device,
                             componentNumber)
                     .get();
-            /*
             switch (payloadRaw[i + 1]) {
                 case 0x00:
                 case 0x01:
@@ -58,7 +57,7 @@ public class CayenneLppService {
                 case 0x03:
                     value = new Float();
                     break;
-            }*/
+            }
 
             SensorReading sr = new SensorReading(sensor, value, time);
             sensorReadings.add(sr);
