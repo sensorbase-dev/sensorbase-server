@@ -12,7 +12,7 @@ public abstract class DeviceComponent {
     private Long sensorId;
 
     // Component's number within the physical device
-    private byte componentNumber;
+    private short componentNumber;
 
     @ManyToOne
     private Device parentDevice;
@@ -21,21 +21,15 @@ public abstract class DeviceComponent {
         return this.sensorId;
     }
 
-    /* Takes any Long as the physical device component's id, then hashes it with
-     * the parent device's id field to produce a unique virtual sensor id for
-     * the database. The argument given to setId() does not need to be unique,
-     * because the device id is already unique. Hashing should guarantee a
-     * unique object id for sensor records in the database.
-     */
     public void setSensorId(Long sensorId) {
         this.sensorId = sensorId;
     }
 
-    public byte getComponentNumber() {
+    public short getComponentNumber() {
         return this.componentNumber;
     }
 
-    public void setComponentNumber(byte componentNumber) {
+    public void setComponentNumber(short componentNumber) {
         this.componentNumber = componentNumber;
     }
 

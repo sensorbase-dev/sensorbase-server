@@ -4,13 +4,13 @@ import javax.persistence.Entity;
 
 @Entity
 public class Sensor extends DeviceComponent {
-    private SensorType type;
+    private InputType inputType;
 
-    public SensorType getType() {
-        return this.type;
+    public InputType getInputType() {
+        return this.inputType;
     }
 
-    public void setType(SensorType type) {
-        this.type = type;
+    public void setInputType(InputType inputType) {
+        this.inputType = inputType;
     }
 }

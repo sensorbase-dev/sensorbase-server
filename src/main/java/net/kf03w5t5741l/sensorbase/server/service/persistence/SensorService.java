@@ -28,7 +28,7 @@ public class SensorService {
     }
 
     public Optional<Sensor> findByParentDeviceAndComponentNumber(
-            Device parentDevice, byte componentNumber) {
+            Device parentDevice, short componentNumber) {
         return this.sensorRepository.findByParentDeviceAndComponentNumber(
                 parentDevice, componentNumber);
     }

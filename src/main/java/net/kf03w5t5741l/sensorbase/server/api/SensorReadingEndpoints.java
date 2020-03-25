@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -84,6 +85,7 @@ public class SensorReadingEndpoints {
         sensorReading.setSensor(sensorOptional.get());
 
         if (sensorReading.getTime() == null) {
+            LocalDate gewerkteDagDatum;
             sensorReading.setTime(ZonedDateTime.now());
         }
         return this.sensorReadingService.save(sensorReading);

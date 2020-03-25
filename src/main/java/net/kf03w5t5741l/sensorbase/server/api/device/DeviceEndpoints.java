@@ -71,7 +71,7 @@ public class DeviceEndpoints {
     }
 
     @DeleteMapping("/{hardwareUid}")
-    public void deleteDevice(@RequestParam String hardwareUid) {
+    public void deleteDevice(@PathVariable String hardwareUid) {
         this.deviceService.deleteByHardwareUid(hardwareUid);
     }
 
