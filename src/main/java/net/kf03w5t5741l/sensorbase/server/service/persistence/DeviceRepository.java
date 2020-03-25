@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server.persistence.device;
+package net.kf03w5t5741l.sensorbase.server.service.persistence;
 
 import org.springframework.stereotype.Component;
 import org.springframework.data.repository.CrudRepository;
@@ -9,5 +9,6 @@ import java.util.Optional;
 
 @Component
 public interface DeviceRepository extends CrudRepository<Device, Long> {
-    public Optional<Device> findByHardwareUid(Long hardwareUid);
+    public Optional<Device> findByHardwareUid(long hardwareUid);
+    public void deleteByHardwareUid(long hardwareUid);
 }

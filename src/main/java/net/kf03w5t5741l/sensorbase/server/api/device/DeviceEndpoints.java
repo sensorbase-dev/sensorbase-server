@@ -1,6 +1,5 @@
 package net.kf03w5t5741l.sensorbase.server.api.device;
 
-import net.kf03w5t5741l.sensorbase.server.domain.device.component.DeviceComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,8 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.DeviceComponent;
 
 import java.util.Optional;
 import java.util.Set;
@@ -27,13 +27,13 @@ public class DeviceEndpoints {
     }
 
     @GetMapping("/{hardwareUid}")
-    public Device readDevice(@PathVariable Long hardwareUid) {
+    public Device readDevice(@PathVariable String hardwareUid) {
         return this.deviceService.findByHardwareUid(hardwareUid).get();
     }
 
     @GetMapping("/{hardwareUid}/components")
     public Set<DeviceComponent> readDeviceComponents(
-            @PathVariable Long hardwareUid) {
+            @PathVariable String hardwareUid) {
         return this
                 .deviceService
                 .findByHardwareUid(hardwareUid)
@@ -43,7 +43,7 @@ public class DeviceEndpoints {
 
     @PostMapping
     public ResponseEntity<Device> createDevice(@RequestBody Device device) {
-        if (device.getHardwareUid() == null) {
+        if (device.getHardwareUid() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Invalid hardware UID");
         }
@@ -59,12 +59,11 @@ public class DeviceEndpoints {
         return new ResponseEntity<Device>(device, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{hardwareUid}")
-    public Device updateDevice(@PathVariable Long hardwareUid,
-                               @RequestBody Device device) {
+    @PutMapping
+    public Device updateDevice(@RequestBody Device device) {
         Long deviceId = this
                 .deviceService
-                .findByHardwareUid(hardwareUid)
+                .findByHardwareUid(device.getHardwareUid())
                 .get()
                 .getDeviceId();
         device.setDeviceId(deviceId);
@@ -72,13 +71,8 @@ public class DeviceEndpoints {
     }
 
     @DeleteMapping("/{hardwareUid}")
-    public boolean deleteDevice(@RequestParam Long hardwareUid) {
-        Long deviceId = this
-                .deviceService
-                .findByHardwareUid((hardwareUid))
-                .get()
-                .getDeviceId();
-        return this.deviceService.deleteById(deviceId);
+    public void deleteDevice(@PathVariable String hardwareUid) {
+        this.deviceService.deleteByHardwareUid(hardwareUid);
     }
 
     @DeleteMapping

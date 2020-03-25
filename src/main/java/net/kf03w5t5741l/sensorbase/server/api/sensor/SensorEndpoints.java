@@ -1,14 +1,14 @@
 package net.kf03w5t5741l.sensorbase.server.api.sensor;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
-import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
-import net.kf03w5t5741l.sensorbase.server.persistence.device.SensorService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -35,15 +35,15 @@ public class SensorEndpoints {
 
     @PostMapping
     public ResponseEntity<Sensor> saveSensor (
-            @RequestParam Long deviceSerialNumber,
+            @RequestParam String hardwareUid,
             @RequestBody Sensor sensor) {
 
         Optional<Device> deviceOptional = this.deviceService.findByHardwareUid(
-                deviceSerialNumber);
+                hardwareUid);
 
         if (!deviceOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Device with serial number " + deviceSerialNumber
+                    "Device with serial number " + hardwareUid
                             + " not registered.");
         }
         sensor.setParentDevice(deviceOptional.get());

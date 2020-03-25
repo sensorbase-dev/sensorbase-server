@@ -3,13 +3,13 @@ package net.kf03w5t5741l.sensorbase.server.api.device;
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
-import net.kf03w5t5741l.sensorbase.server.persistence.device.DeviceService;
-import net.kf03w5t5741l.sensorbase.server.persistence.device.SensorReadingService;
-import net.kf03w5t5741l.sensorbase.server.persistence.device.SensorService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorReadingService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @RestController
 @RequestMapping("/api/devices/{hardwareUid}"
@@ -26,8 +26,8 @@ public class DeviceSensorSensorReadingEndpoints {
 
     @GetMapping
     public Iterable<SensorReading> getSensorReadings(
-            @PathVariable long hardwareUid,
-            @PathVariable int componentNumber) {
+            @PathVariable String hardwareUid,
+            @PathVariable byte componentNumber) {
         Device device = this.deviceService.findByHardwareUid(hardwareUid).get();
         Sensor sensor = this.sensorService.findByParentDeviceAndComponentNumber(
                 device, componentNumber).get();
@@ -36,8 +36,8 @@ public class DeviceSensorSensorReadingEndpoints {
 
     @PostMapping
     public SensorReading createSensorReading(
-            @PathVariable long hardwareUid,
-            @PathVariable int componentNumber,
+            @PathVariable String hardwareUid,
+            @PathVariable byte componentNumber,
             @RequestBody SensorReading sensorReading) {
         Device device = this.deviceService.findByHardwareUid(hardwareUid).get();
         Sensor sensor = this
@@ -45,13 +45,16 @@ public class DeviceSensorSensorReadingEndpoints {
                 .findByParentDeviceAndComponentNumber(device, componentNumber)
                 .get();
         sensorReading.setSensor(sensor);
-        sensorReading.setTime(LocalDateTime.now());
+
+        if (sensorReading.getTime() == null) {
+            sensorReading.setTime(ZonedDateTime.now());
+        }
         return this.sensorReadingService.save(sensorReading);
     }
 
     @DeleteMapping
-    public void deleteAllSensorReadings(@PathVariable long hardwareUid,
-                                        @PathVariable int componentNumber) {
+    public void deleteAllSensorReadings(@PathVariable String hardwareUid,
+                                        @PathVariable byte componentNumber) {
         Device device = this.deviceService.findByHardwareUid(hardwareUid).get();
         Sensor sensor = this
                 .sensorService

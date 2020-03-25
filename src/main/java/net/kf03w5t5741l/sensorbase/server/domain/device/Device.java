@@ -20,7 +20,7 @@ public class Device {
     private Long deviceId;
 
     @Column(unique = true)
-    private Long hardwareUid;
+    private long hardwareUid;
 
     private String name;
     private long publicKey;
@@ -41,14 +41,7 @@ public class Device {
         return this.deviceId;
     }
 
-    /* Takes any id provided by the physical device as its record id in the
-     * database.
-     *
-     * Take special care: the physical device is responsible for providing
-     * a unique id, not the SensorBase-server application. This is implemented
-     * on the hardware device by using its hardcoded serial number as id.
-     */
-    public void setDeviceId(long deviceId) {
+    public void setDeviceId(Long deviceId) {
         this.deviceId = deviceId;
     }
 
@@ -60,12 +53,16 @@ public class Device {
         this.name = name;
     }
 
-    public Long getHardwareUid() {
+    public long getHardwareUid() {
         return this.hardwareUid;
     }
 
-    public void setHardwareUid(Long hardwareUid) {
+    public void setHardwareUid(long hardwareUid) {
         this.hardwareUid = hardwareUid;
+    }
+
+    public String getHardwareUidHex() {
+        return Long.toString(this.hardwareUid, 16);
     }
 
     public long getPublicKey() {

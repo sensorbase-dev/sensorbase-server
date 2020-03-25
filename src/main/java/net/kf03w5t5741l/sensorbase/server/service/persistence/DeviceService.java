@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server.persistence.device;
+package net.kf03w5t5741l.sensorbase.server.service.persistence;
 
 import java.util.Optional;
 
@@ -27,21 +27,29 @@ public class DeviceService {
         return this.deviceRepository.findById(id);
     }
 
-    public Optional<Device> findByHardwareUid(Long serialNumber) {
-        return this.deviceRepository.findByHardwareUid(serialNumber);
+    public Optional<Device> findByHardwareUid(long hardwareUid) {
+        return this.deviceRepository.findByHardwareUid(hardwareUid);
     }
 
+    public Optional<Device> findByHardwareUid(String hardwareUidHex) {
+        long hardwareUid = Long.parseLong(hardwareUidHex, 16);
+        return this.deviceRepository.findByHardwareUid(hardwareUid);
+    }
     public Iterable<Device> findAll() {
         return this.deviceRepository.findAll();
     }
 
-    public boolean deleteById(Long id) {
-        if (this.deviceRepository.existsById(id)) {
-            this.deviceRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
+    public void deleteById(Long deviceId) {
+        this.deviceRepository.deleteById(deviceId);
+    }
+
+    public void deleteByHardwareUid(long hardwareUid) {
+        this.deviceRepository.deleteByHardwareUid(hardwareUid);
+    }
+
+    public void deleteByHardwareUid(String hardwareUidHex) {
+        long hardwareUid = Long.parseLong(hardwareUidHex, 16);
+        this.deviceRepository.deleteByHardwareUid(hardwareUid);
     }
 
     public void deleteAll() {
