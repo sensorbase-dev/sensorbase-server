@@ -42,7 +42,7 @@ public class SensorReadingEndpoints {
 
     @GetMapping("/gteq/{value}")
     public List<SensorReading> getSensorReadingsGtEq(
-            @PathVariable Integer value) {
+            @PathVariable Float value) {
         return this.sensorReadingService.findValueGtEq(value);
     }
 
