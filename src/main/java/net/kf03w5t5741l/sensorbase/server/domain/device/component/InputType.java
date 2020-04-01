@@ -38,4 +38,14 @@ public enum InputType implements ReadingType {
     public void setDataSize(byte dataSize) {
         this.dataSize = dataSize;
     }
+
+    @Override
+    public String toString() {
+        return "InputType 0x"
+                + Integer.toHexString(this.getId())
+                +", name: "
+                + this.name()
+                + ", datasize: "
+                + this.getDataSize();
+    }
 }

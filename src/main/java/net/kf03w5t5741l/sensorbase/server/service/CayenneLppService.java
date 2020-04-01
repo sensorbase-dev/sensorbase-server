@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.nio.ByteBuffer;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,8 @@ public class CayenneLppService {
             byte[] payloadRaw,
             long hardwareUid,
             ZonedDateTime time) {
+        System.out.println("payloadRaw: " + Arrays.toString(payloadRaw));
+        System.out.println("hardwareUid: " + Long.toString(hardwareUid, 16));
 
         // Check if device is registered, otherwise register it
         Optional<Device> deviceOptional = this
@@ -56,11 +59,10 @@ public class CayenneLppService {
 
         // Loop over the ByteBuffer to parse each individual sensor reading
         while (buffer.hasRemaining()) {
+            System.out.println("ByteBuffer position: " + buffer.position());
             int dataPointStart = buffer.position();
-            short componentNumber = buffer.getShort(dataPointStart);
-
-            Float value = null;
-            int dataSize = 0;
+            short componentNumber = buffer.getShort();
+            System.out.println("ByteBuffer position after reading short: " + buffer.position());
 
             // Check if sensor is registered, otherwise register it
             Optional<Sensor> sensorOptional = this
@@ -83,23 +85,40 @@ public class CayenneLppService {
                 this.deviceService.save(device);
             }
 
+            // Skip over accelerometer readings for now -
+            // they are 6 bytes and cannot be stored in Float
+            if (sensor.getInputType() == InputType.ACCELEROMETER) {
+                buffer.position(buffer.position()
+                        + sensor.getInputType().getDataSize());
+                continue;
+            }
+
             // Read the sensor's value
-            byte[] rawValue = new byte[sensor.getInputType().getDataSize()];
-            buffer.get(rawValue, buffer.position(), rawValue.length);
-            value = ByteBuffer.wrap(rawValue).getFloat();
+            byte dataSize = sensor.getInputType().getDataSize();
+            byte[] rawValue = new byte[dataSize];
+            System.out.println(Arrays.toString(buffer.array()));
+            System.out.println("Reading from buffer at position " + buffer.position() + " for length " + rawValue.length + " bytes");
+            buffer.get(rawValue);
+            System.out.println(Arrays.toString(rawValue));
+
+            ByteBuffer rawValueBuffer = ByteBuffer.allocate(Float.SIZE);
+            rawValueBuffer.put(rawValue);
+            Float value = rawValueBuffer.getFloat(0);
 
             SensorReading sr = new SensorReading(sensor, value, time);
             sensorReadings.add(sr);
-            buffer.position(buffer.position() + dataSize);
         }
 
         return sensorReadings;
     }
 
     public InputType parseInputType(short componentNumber) {
-        byte inputTypeNumber = (byte) componentNumber;
+        byte inputTypeNumber = ByteBuffer.allocate(Short.SIZE).putShort(componentNumber).get(1);
+        System.out.println("Component number: " + componentNumber);
+        System.out.println("inputTypeNumber: " + inputTypeNumber);
         for (InputType type : InputType.values()) {
             if (inputTypeNumber == type.getId()) {
+                System.out.println(type);
                 return type;
             }
         }

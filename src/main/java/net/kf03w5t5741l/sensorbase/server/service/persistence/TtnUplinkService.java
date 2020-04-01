@@ -24,10 +24,10 @@ public class TtnUplinkService {
     private CayenneLppService cayenneLppService;
 
     public TtnUplink save(TtnUplink uplink) {
-        //List<SensorReading> sensorReadings = this.cayenneLppService.parse(uplink.getPayloadRaw(), Long.parseLong(uplink.getHardwareSerial(), 16), uplink.getTime());
-        //for (SensorReading sr : sensorReadings) {
-        //    this.sensorReadingService.save(sr);
-        //}
+        List<SensorReading> sensorReadings = this.cayenneLppService.parse(uplink.getPayloadRaw(), Long.parseLong(uplink.getHardwareSerial(), 16), uplink.getTime());
+        for (SensorReading sr : sensorReadings) {
+            this.sensorReadingService.save(sr);
+        }
         return this.ttnUplinkRepository.save(uplink);
     }
 
