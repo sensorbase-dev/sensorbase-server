@@ -17,6 +17,7 @@ public class SensorReading {
 
     private Float value;
     private ZonedDateTime time;
+    private String devId;
 
     public SensorReading() {}
 
@@ -60,5 +61,13 @@ public class SensorReading {
 
     public InputType getType() {
         return this.sensor.getInputType();
+    }
+
+    public String getDevId() {
+        return this.devId;
+    }
+
+    public void setDevId(String devId) {
+        this.devId = devId;
     }
 }

@@ -18,7 +18,7 @@ public class TtnUplink {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ttnUplinkId;
 
-    private byte[] hardwareSerial;
+    private String hardwareSerial;
     private byte[] payloadRaw;
     private ZonedDateTime time;
 
@@ -39,11 +39,11 @@ public class TtnUplink {
         this.ttnUplinkId = ttnUplinkId;
     }
 
-    public byte[] getHardwareSerial() {
+    public String getHardwareSerial() {
         return this.hardwareSerial;
     }
 
-    public void setHardwareSerial(byte[] hardwareSerial) {
+    public void setHardwareSerial(String hardwareSerial) {
         this.hardwareSerial = hardwareSerial;
     }
 
