@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,11 +100,13 @@ public class CayenneLppService {
             System.out.println(Arrays.toString(buffer.array()));
             System.out.println("Reading from buffer at position " + buffer.position() + " for length " + rawValue.length + " bytes");
             buffer.get(rawValue);
-            System.out.println(Arrays.toString(rawValue));
+            System.out.println("rawValue: " + Arrays.toString(rawValue));
 
-            ByteBuffer rawValueBuffer = ByteBuffer.allocate(Float.SIZE);
-            rawValueBuffer.put(rawValue);
-            Float value = rawValueBuffer.getFloat(0);
+            ByteBuffer rawValueBuffer = ByteBuffer.allocate(Float.BYTES);
+            rawValueBuffer.position(rawValueBuffer.capacity() - rawValue.length);
+            rawValueBuffer = rawValueBuffer.put(rawValue);
+            System.out.println("rawValueBuffer: " + Arrays.toString(rawValueBuffer.array()));
+            Integer value = rawValueBuffer.order(ByteOrder.BIG_ENDIAN).getInt(0);
 
             SensorReading sr = new SensorReading(sensor, value, time);
             sensorReadings.add(sr);
