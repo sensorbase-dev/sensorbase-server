@@ -15,13 +15,13 @@ public class SensorReading {
     @ManyToOne
     private Sensor sensor;
 
-    private Float value;
+    private Integer value;
     private ZonedDateTime time;
     private String devId;
 
     public SensorReading() {}
 
-    public SensorReading(Sensor sensor, Float value, ZonedDateTime time) {
+    public SensorReading(Sensor sensor, Integer value, ZonedDateTime time) {
         this.sensor = sensor;
         this.value = value;
         this.time = time;
@@ -47,7 +47,7 @@ public class SensorReading {
         return this.value;
     }
 
-    public void setValue(Float value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
