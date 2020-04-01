@@ -19,6 +19,7 @@ public class TtnUplink {
     private Long ttnUplinkId;
 
     private String hardwareSerial;
+    private String devId;
     private byte[] payloadRaw;
     private ZonedDateTime time;
 
@@ -45,6 +46,14 @@ public class TtnUplink {
 
     public void setHardwareSerial(String hardwareSerial) {
         this.hardwareSerial = hardwareSerial;
+    }
+
+    public String getDevId() {
+        return this.devId;
+    }
+
+    public void setDevId(String devId) {
+        this.devId = devId;
     }
 
     public byte[] getPayloadRaw() {

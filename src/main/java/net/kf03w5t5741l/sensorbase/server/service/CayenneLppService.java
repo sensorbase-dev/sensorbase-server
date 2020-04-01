@@ -1,6 +1,7 @@
 package net.kf03w5t5741l.sensorbase.server.service;
 
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
+import net.kf03w5t5741l.sensorbase.server.domain.TtnUplink;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
@@ -29,10 +30,12 @@ public class CayenneLppService {
     @Autowired
     private SensorService sensorService;
 
-    public List<SensorReading> parse(
-            byte[] payloadRaw,
-            long hardwareUid,
-            ZonedDateTime time) {
+    public List<SensorReading> parse(TtnUplink uplink) {
+        byte[] payloadRaw = uplink.getPayloadRaw();
+        long hardwareUid = Long.parseLong(uplink.getHardwareSerial(), 16);
+        String devId = uplink.getDevId();
+        ZonedDateTime time = uplink.getTime();
+
         System.out.println("payloadRaw: " + Arrays.toString(payloadRaw));
         System.out.println("hardwareUid: " + Long.toString(hardwareUid, 16));
 
@@ -47,7 +50,7 @@ public class CayenneLppService {
         } else {
             Device newDevice = new Device();
             newDevice.setHardwareUid(hardwareUid);
-            newDevice.setName(Long.toString(hardwareUid, 16));
+            newDevice.setName(devId);
             device = this
                     .deviceService
                     .save(newDevice);
