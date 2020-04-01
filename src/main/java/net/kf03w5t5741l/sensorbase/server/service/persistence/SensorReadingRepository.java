@@ -17,7 +17,7 @@ public interface SensorReadingRepository
 
     // JPQL: voordeel - database-agnostic
     @Query("select sr from SensorReading sr where sr.value >= ?1")
-    public List<SensorReading> findValueGtEq(Integer value);
+    public List<SensorReading> findValueGtEq(Float value);
 
     @Query("select sr from SensorReading sr order by sr.time desc")
     public List<SensorReading> findAllByTimeDesc();

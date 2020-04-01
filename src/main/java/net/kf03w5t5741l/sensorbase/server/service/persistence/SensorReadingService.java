@@ -32,7 +32,7 @@ public class SensorReadingService {
         return this.sensorReadingRepository.findBySensorOrderByTimeDesc(sensor);
     }
 
-    public List<SensorReading> findValueGtEq(Integer value) {
+    public List<SensorReading> findValueGtEq(Float value) {
         return this.sensorReadingRepository.findValueGtEq(value);
     }
 
