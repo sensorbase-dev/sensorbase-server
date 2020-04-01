@@ -109,7 +109,7 @@ public class CayenneLppService {
             rawValueBuffer.position(rawValueBuffer.capacity() - rawValue.length);
             rawValueBuffer = rawValueBuffer.put(rawValue);
             System.out.println("rawValueBuffer: " + Arrays.toString(rawValueBuffer.array()));
-            Integer value = rawValueBuffer.order(ByteOrder.BIG_ENDIAN).getInt(0);
+            Integer value = rawValueBuffer.getInt(0);
 
             SensorReading sr = new SensorReading(sensor, value, time);
             sensorReadings.add(sr);
