@@ -3,10 +3,10 @@ package net.kf03w5t5741l.sensorbase.server.api;
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorReadingService;
+import net.kf03w5t5741l.sensorbase.server.service.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.service.SensorReadingService;
 
-import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
+import net.kf03w5t5741l.sensorbase.server.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +42,7 @@ public class SensorReadingEndpoints {
 
     @GetMapping("/gteq/{value}")
     public List<SensorReading> getSensorReadingsGtEq(
-            @PathVariable Float value) {
+            @PathVariable Integer value) {
         return this.sensorReadingService.findValueGtEq(value);
     }
 

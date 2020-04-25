@@ -1,7 +1,7 @@
 package net.kf03w5t5741l.sensorbase.server.api;
 
 import net.kf03w5t5741l.sensorbase.server.domain.TtnUplink;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.TtnUplinkService;
+import net.kf03w5t5741l.sensorbase.server.service.TtnUplinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

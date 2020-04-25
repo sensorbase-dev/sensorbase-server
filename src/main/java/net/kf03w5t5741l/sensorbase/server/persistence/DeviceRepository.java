@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server.service.persistence;
+package net.kf03w5t5741l.sensorbase.server.persistence;
 
 import org.springframework.stereotype.Component;
 import org.springframework.data.repository.CrudRepository;

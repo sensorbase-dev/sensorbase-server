@@ -1,9 +1,10 @@
-package net.kf03w5t5741l.sensorbase.server.service.persistence;
+package net.kf03w5t5741l.sensorbase.server.service;
 
 import java.util.List;
 import java.util.Optional;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
+import net.kf03w5t5741l.sensorbase.server.persistence.SensorReadingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ public class SensorReadingService {
         return this.sensorReadingRepository.findBySensorOrderByTimeDesc(sensor);
     }
 
-    public List<SensorReading> findValueGtEq(Float value) {
+    public List<SensorReading> findValueGtEq(Integer value) {
         return this.sensorReadingRepository.findValueGtEq(value);
     }
 
