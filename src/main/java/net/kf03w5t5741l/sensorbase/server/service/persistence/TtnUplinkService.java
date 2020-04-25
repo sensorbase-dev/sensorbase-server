@@ -1,8 +1,8 @@
-package net.kf03w5t5741l.sensorbase.server.service;
+package net.kf03w5t5741l.sensorbase.server.service.persistence;
 
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 import net.kf03w5t5741l.sensorbase.server.domain.TtnUplink;
-import net.kf03w5t5741l.sensorbase.server.persistence.TtnUplinkRepository;
+import net.kf03w5t5741l.sensorbase.server.service.CayenneLppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

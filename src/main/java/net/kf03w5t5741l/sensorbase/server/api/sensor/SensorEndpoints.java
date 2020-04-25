@@ -1,14 +1,14 @@
 package net.kf03w5t5741l.sensorbase.server.api.sensor;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
-import net.kf03w5t5741l.sensorbase.server.service.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
-import net.kf03w5t5741l.sensorbase.server.service.SensorService;
+import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -64,7 +64,7 @@ public class SensorEndpoints {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteSensor(@PathVariable Long id) {
+    public boolean deleteSensor(@RequestParam Long id) {
         return this.sensorService.deleteById(id);
     }
 

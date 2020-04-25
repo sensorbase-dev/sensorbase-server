@@ -1,8 +1,7 @@
-package net.kf03w5t5741l.sensorbase.server.service;
+package net.kf03w5t5741l.sensorbase.server.service.persistence;
 
 import java.util.Optional;
 
-import net.kf03w5t5741l.sensorbase.server.persistence.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

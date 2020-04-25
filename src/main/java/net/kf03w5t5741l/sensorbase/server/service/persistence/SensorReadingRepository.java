@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server.persistence;
+package net.kf03w5t5741l.sensorbase.server.service.persistence;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +17,7 @@ public interface SensorReadingRepository
 
     // JPQL: voordeel - database-agnostic
     @Query("select sr from SensorReading sr where sr.value >= ?1")
-    public List<SensorReading> findValueGtEq(Integer value);
+    public List<SensorReading> findValueGtEq(Float value);
 
     @Query("select sr from SensorReading sr order by sr.time desc")
     public List<SensorReading> findAllByTimeDesc();
