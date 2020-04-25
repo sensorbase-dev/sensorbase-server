@@ -2,6 +2,7 @@ package net.kf03w5t5741l.sensorbase.server.service;
 
 import net.kf03w5t5741l.sensorbase.server.domain.UbiBotUplink;
 import net.kf03w5t5741l.sensorbase.server.persistence.UbiBotUplinkRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UbiBotUplinkService {
+    @Autowired
     private UbiBotUplinkRepository ubiBotUplinkRepository;
 
     public UbiBotUplink save(UbiBotUplink uplink) {
