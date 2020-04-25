@@ -12,7 +12,7 @@ public class UbiBotUplink {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ubibotUplinkId;
 
-    private String channelId;
+    private int channelId;
     private LocalDateTime CreatedAt;
 
     private int field1;
@@ -35,11 +35,11 @@ public class UbiBotUplink {
         this.ubibotUplinkId = ubibotUplinkId;
     }
 
-    public String getChannelId() {
+    public int getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(String channelId) {
+    public void setChannelId(int channelId) {
         this.channelId = channelId;
     }
 
