@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,7 +14,7 @@ public class UbiBotUplink {
     private Long ubibotUplinkId;
 
     private int channelId;
-    private LocalDateTime timestamp;
+    private Instant timestamp;
 
     private float field1;
     private float field2;
@@ -43,12 +44,12 @@ public class UbiBotUplink {
         this.channelId = channelId;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = Instant.ofEpochSecond(timestamp);
     }
 
     public float getField1() {
