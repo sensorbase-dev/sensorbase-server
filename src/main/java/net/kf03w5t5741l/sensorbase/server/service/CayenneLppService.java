@@ -5,14 +5,11 @@ import net.kf03w5t5741l.sensorbase.server.domain.TtnUplink;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +18,6 @@ import java.util.Optional;
 
 @Service
 public class CayenneLppService {
-    public static final byte DATA_CHANNEL_SIZE = 1;
-    public static final byte DATA_TYPE_SIZE = 1;
-
     @Autowired
     private DeviceService deviceService;
 
@@ -65,6 +59,7 @@ public class CayenneLppService {
         while (buffer.hasRemaining()) {
             System.out.println("ByteBuffer position: " + buffer.position());
             int dataPointStart = buffer.position();
+            // componentNumber = 0x[(byte for data channel), (byte for data type)]
             short componentNumber = buffer.getShort();
             System.out.println("ByteBuffer position after reading short: " + buffer.position());
 
@@ -109,7 +104,7 @@ public class CayenneLppService {
             rawValueBuffer.position(rawValueBuffer.capacity() - rawValue.length);
             rawValueBuffer = rawValueBuffer.put(rawValue);
             System.out.println("rawValueBuffer: " + Arrays.toString(rawValueBuffer.array()));
-            Integer value = rawValueBuffer.order(ByteOrder.BIG_ENDIAN).getInt(0);
+            Integer value = rawValueBuffer.getInt(0);
 
             SensorReading sr = new SensorReading(sensor, value, time);
             sensorReadings.add(sr);
