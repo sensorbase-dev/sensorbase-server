@@ -2,6 +2,7 @@ package net.kf03w5t5741l.sensorbase.server.api;
 
 import net.kf03w5t5741l.sensorbase.server.domain.UbiBotUplink;
 import net.kf03w5t5741l.sensorbase.server.service.UbiBotUplinkService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/ubibot")
 public class UbiBotUplinkEndpoints {
+    @Autowired
     private UbiBotUplinkService ubiBotUplinkService;
 
     @GetMapping
