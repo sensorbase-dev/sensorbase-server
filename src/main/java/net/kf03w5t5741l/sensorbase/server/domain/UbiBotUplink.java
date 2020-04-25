@@ -13,7 +13,7 @@ public class UbiBotUplink {
     private Long ubibotUplinkId;
 
     private int channelId;
-    private LocalDateTime CreatedAt;
+    private LocalDateTime timestamp;
 
     private float field1;
     private float field2;
@@ -43,12 +43,12 @@ public class UbiBotUplink {
         this.channelId = channelId;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return CreatedAt;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        CreatedAt = createdAt;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public float getField1() {
