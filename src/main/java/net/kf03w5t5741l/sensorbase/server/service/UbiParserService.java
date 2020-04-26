@@ -79,9 +79,9 @@ public class UbiParserService {
                 sensor.setParentDevice(device);
                 sensor.setComponentNumber(componentNumber);
                 sensor.setInputType(this.ubiInputTypes.get(componentNumber));
-                this.sensorService.save(sensor);
+                sensor = this.sensorService.save(sensor);
                 device.addSensor(sensor);
-                this.deviceService.save(device);
+                device = this.deviceService.save(device);
                 System.out.println("Sensor saved!");
             } else {
                 sensor = sensorOptional.get();
@@ -92,7 +92,7 @@ public class UbiParserService {
                     new Float(values[componentNumber]),
                     time
             );
-            this.sensorReadingService.save(sr);
+            sr = this.sensorReadingService.save(sr);
             System.out.println("SensorReading saved!");
             sensor.addSensorReading(sr);
             this.sensorService.save(sensor);

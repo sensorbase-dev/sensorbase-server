@@ -5,6 +5,7 @@ import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,7 @@ public class Sensor extends DeviceComponent {
     private InputType inputType;
 
     @OneToMany
-    private Set<SensorReading> sensorReadings;
+    private Set<SensorReading> sensorReadings = new HashSet<SensorReading>();
 
     public InputType getInputType() {
         return this.inputType;
