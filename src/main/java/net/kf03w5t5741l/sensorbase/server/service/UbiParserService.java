@@ -1,7 +1,7 @@
 package net.kf03w5t5741l.sensorbase.server.service;
 
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
-import net.kf03w5t5741l.sensorbase.server.domain.UbiBotUplink;
+import net.kf03w5t5741l.sensorbase.server.domain.uplink.UbiBotUplink;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
