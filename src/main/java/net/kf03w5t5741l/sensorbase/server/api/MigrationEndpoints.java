@@ -1,4 +1,4 @@
-package net.kf03w5t5741l.sensorbase.server;
+package net.kf03w5t5741l.sensorbase.server.api;
 
 import net.kf03w5t5741l.sensorbase.server.domain.uplink.TtnUplink;
 import net.kf03w5t5741l.sensorbase.server.domain.uplink.UbiBotUplink;
@@ -7,13 +7,13 @@ import net.kf03w5t5741l.sensorbase.server.service.TtnUplinkService;
 import net.kf03w5t5741l.sensorbase.server.service.UbiBotUplinkService;
 import net.kf03w5t5741l.sensorbase.server.service.UbiParserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
-
-@Component
-class AppInitializator {
+@RestController
+@RequestMapping("/api/migrate")
+public class MigrationEndpoints {
     @Autowired
     private TtnUplinkService ttnUplinkService;
 
@@ -26,8 +26,8 @@ class AppInitializator {
     @Autowired
     private UbiParserService ubiParserService;
 
-    @PostConstruct
-    private void init() {
+    @GetMapping("/load")
+    private void load() {
         Iterable<TtnUplink> ttnUplinks = ttnUplinkService.findAll();
         for (TtnUplink uplink : ttnUplinks) {
             this.cayenneLppService.parseAndSave(uplink);

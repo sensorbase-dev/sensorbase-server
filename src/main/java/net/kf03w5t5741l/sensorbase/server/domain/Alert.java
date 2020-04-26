@@ -3,7 +3,6 @@ package net.kf03w5t5741l.sensorbase.server.domain;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 
 import javax.persistence.*;
-import java.util.function.Predicate;
 
 @Entity
 public class Alert {
