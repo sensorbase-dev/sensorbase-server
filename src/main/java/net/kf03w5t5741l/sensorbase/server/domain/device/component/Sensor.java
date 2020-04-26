@@ -26,7 +26,7 @@ public class Sensor extends DeviceComponent {
     @JsonIgnore
     public List<SensorReading> getSensorReadings() {
         this.sensorReadings.sort(
-                (sr1, sr2) -> sr1.getTime().compareTo(sr2.getTime())
+                (sr1, sr2) -> sr2.getTime().compareTo(sr1.getTime())
         );
         return sensorReadings;
     }
