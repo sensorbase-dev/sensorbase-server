@@ -78,7 +78,7 @@ public class DeviceSensorEndpoints {
         Device parentDevice = this.deviceService.findByHardwareUid(
                 hardwareUid).get();
         Long sensorId = this.sensorService.findByParentDeviceAndComponentNumber(
-                parentDevice, componentNumber).get().getSensorId();
+                parentDevice, componentNumber).get().getComponentId();
         return this.sensorService.deleteById(sensorId);
     }
 
@@ -90,7 +90,7 @@ public class DeviceSensorEndpoints {
                 .get()
                 .getSensors();
         for (Sensor sensor : sensorsToDelete) {
-            this.sensorService.deleteById(sensor.getSensorId());
+            this.sensorService.deleteById(sensor.getComponentId());
         }
     }
 
