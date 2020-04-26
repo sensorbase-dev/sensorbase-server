@@ -24,10 +24,7 @@ public class TtnUplinkService {
     private CayenneLppService cayenneLppService;
 
     public TtnUplink save(TtnUplink uplink) {
-        Set<SensorReading> sensorReadings = this.cayenneLppService.parse(uplink);
-        for (SensorReading sr : sensorReadings) {
-            this.sensorReadingService.save(sr);
-        }
+        this.cayenneLppService.parseAndSave(uplink);
         return this.ttnUplinkRepository.save(uplink);
     }
 

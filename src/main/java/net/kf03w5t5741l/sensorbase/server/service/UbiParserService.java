@@ -20,6 +20,9 @@ public class UbiParserService {
     @Autowired
     private SensorService sensorService;
 
+    @Autowired
+    private SensorReadingService sensorReadingService;
+
     private final List<InputType> ubiInputTypes;
 
     public UbiParserService() {
@@ -32,7 +35,7 @@ public class UbiParserService {
         ));
     }
 
-    public Set<SensorReading> parse(UbiBotUplink uplink) {
+    public void parseAndSave(UbiBotUplink uplink) {
         Device device = null;
         Optional<Device> deviceOptional = this
                 .deviceService
@@ -47,7 +50,6 @@ public class UbiParserService {
             device = deviceOptional.get();
         }
 
-        Set<SensorReading> sensorReadings = new HashSet<SensorReading>();
         ZonedDateTime time = ZonedDateTime.ofInstant(
                 uplink.getTimestamp(),
                 ZoneId.systemDefault()
@@ -82,9 +84,7 @@ public class UbiParserService {
                     new Float(values[i]),
                     time
             );
-            sensorReadings.add(sensorReading);
+            this.sensorReadingService.save(sensorReading);
         }
-
-        return sensorReadings;
     }
 }

@@ -21,7 +21,10 @@ public class CayenneLppService {
     @Autowired
     private SensorService sensorService;
 
-    public Set<SensorReading> parse(TtnUplink uplink) {
+    @Autowired
+    private SensorReadingService sensorReadingService;
+
+    public void parseAndSave(TtnUplink uplink) {
         byte[] payloadRaw = uplink.getPayloadRaw();
         long hardwareUid = Long.parseLong(uplink.getHardwareSerial(), 16);
         String devId = uplink.getDevId();
@@ -46,8 +49,6 @@ public class CayenneLppService {
                     .deviceService
                     .save(newDevice);
         }
-
-        Set<SensorReading> sensorReadings = new HashSet<SensorReading>();
 
         // Store the CayenneLPP payload in a ByteBuffer
         ByteBuffer buffer = ByteBuffer.wrap(payloadRaw);
@@ -104,10 +105,8 @@ public class CayenneLppService {
             Integer value = rawValueBuffer.getInt(0);
 
             SensorReading sr = new SensorReading(sensor, value, time);
-            sensorReadings.add(sr);
+            this.sensorReadingService.save(sr);
         }
-
-        return sensorReadings;
     }
 
     public InputType parseInputType(short componentNumber) {

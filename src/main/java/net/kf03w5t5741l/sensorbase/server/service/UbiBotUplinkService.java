@@ -14,7 +14,11 @@ public class UbiBotUplinkService {
     @Autowired
     private UbiBotUplinkRepository ubiBotUplinkRepository;
 
+    @Autowired
+    private UbiParserService ubiParserService;
+
     public UbiBotUplink save(UbiBotUplink uplink) {
+        this.ubiParserService.parseAndSave(uplink);
         return this.ubiBotUplinkRepository.save(uplink);
     }
 
