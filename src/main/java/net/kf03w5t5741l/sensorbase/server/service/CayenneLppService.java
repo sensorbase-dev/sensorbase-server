@@ -81,7 +81,7 @@ public class CayenneLppService {
                 sensor = this.sensorService.save(newSensor);
 
                 device.addSensor(sensor);
-                this.deviceService.save(device);
+                device = this.deviceService.save(device);
             }
 
             // Skip over accelerometer readings for now -
@@ -104,12 +104,21 @@ public class CayenneLppService {
             rawValueBuffer.position(rawValueBuffer.capacity() - rawValue.length);
             rawValueBuffer = rawValueBuffer.put(rawValue);
             System.out.println("rawValueBuffer: " + Arrays.toString(rawValueBuffer.array()));
-            Integer value = rawValueBuffer.getInt(0);
+            Integer intValue = rawValueBuffer.getInt(0);
+
+            Number value = null;
+            switch(sensor.getInputType()) {
+                case TEMPERATURE:
+                    value = new Float(intValue / 10.0f);
+                    break;
+                default:
+                    value = intValue;
+            }
 
             SensorReading sr = new SensorReading(sensor, value, time);
             sr = this.sensorReadingService.save(sr);
             sensor.addSensorReading(sr);
-            this.sensorService.save(sensor);
+            sensor = this.sensorService.save(sensor);
         }
     }
 

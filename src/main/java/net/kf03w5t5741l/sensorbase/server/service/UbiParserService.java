@@ -47,7 +47,7 @@ public class UbiParserService {
             device = new Device();
             device.setHardwareUid(uplink.getChannelId());
             device.setName("UbiBot " + uplink.getChannelId());
-            this.deviceService.save(device);
+            device = this.deviceService.save(device);
             System.out.println("Device saved!");
         } else {
             device = deviceOptional.get();
@@ -95,8 +95,7 @@ public class UbiParserService {
             sr = this.sensorReadingService.save(sr);
             System.out.println("SensorReading saved!");
             sensor.addSensorReading(sr);
-            this.sensorService.save(sensor);
-
+            sensor = this.sensorService.save(sensor);
         }
     }
 }
