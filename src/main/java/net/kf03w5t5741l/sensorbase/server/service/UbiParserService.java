@@ -87,15 +87,16 @@ public class UbiParserService {
                 sensor = sensorOptional.get();
             }
 
-            SensorReading sensorReading = new SensorReading(
+            SensorReading sr = new SensorReading(
                     sensor,
                     new Float(values[componentNumber]),
                     time
             );
-            sensorReading = this.sensorReadingService.save(sensorReading);
+            this.sensorReadingService.save(sr);
             System.out.println("SensorReading saved!");
-            //sensor.addSensorReading(sensorReading);
-            //sensor = this.sensorService.save(sensor);
+            sensor.addSensorReading(sr);
+            this.sensorService.save(sensor);
+
         }
     }
 }
