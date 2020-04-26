@@ -35,16 +35,13 @@ public class AlertService {
     }
 
     public void trigger(Alert alert, Number value) {
-        /*
         System.out.println("Trigger warning!");
         System.out.println(alert.getSensor().getInputType().name()
                 + " was "
-                + alert.getCondition().name()
+                + alert.getAlertCondition().name()
                 + " threshold value "
                 + alert.getThreshold()
                 + ": "
                 + value);
-
-         */
     }
 }
