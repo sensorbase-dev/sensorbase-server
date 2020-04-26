@@ -1,5 +1,6 @@
 package net.kf03w5t5741l.sensorbase.server.persistence;
 
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,6 +15,8 @@ import java.util.Optional;
 public interface SensorReadingRepository
         extends CrudRepository<SensorReading, Long> {
     public List<SensorReading> findBySensorOrderByTimeDesc(Sensor sensor);
+    public List<SensorReading> findBySensorInputTypeOrderByTimeDesc(
+            InputType inputType);
 
     // JPQL: voordeel - database-agnostic
     @Query("select sr from SensorReading sr where sr.value >= ?1")
@@ -29,4 +32,5 @@ public interface SensorReadingRepository
     public Optional<SensorReading> findLatest(Sensor sensor);
 
     public void deleteAllBySensor(Sensor sensor);
+
 }

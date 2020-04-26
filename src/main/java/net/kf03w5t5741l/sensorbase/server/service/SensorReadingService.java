@@ -3,6 +3,7 @@ package net.kf03w5t5741l.sensorbase.server.service;
 import java.util.List;
 import java.util.Optional;
 
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.persistence.SensorReadingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class SensorReadingService {
 
     public Iterable<SensorReading> findAll() {
         return this.sensorReadingRepository.findAll();
+    }
+
+    public List<SensorReading> findBySensorInputTypeOrderByTimeDesc(
+            InputType inputType) {
+        return this
+                .sensorReadingRepository
+                .findBySensorInputTypeOrderByTimeDesc(inputType);
     }
 
     public List<SensorReading> findBySensorOrderByTimeDesc(Sensor sensor) {
@@ -72,4 +80,6 @@ public class SensorReadingService {
     public void deleteAll() {
         this.sensorReadingRepository.deleteAll();
     }
+
+
 }

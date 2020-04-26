@@ -2,6 +2,7 @@ package net.kf03w5t5741l.sensorbase.server.api;
 
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.service.DeviceService;
 import net.kf03w5t5741l.sensorbase.server.service.SensorReadingService;
@@ -38,6 +39,14 @@ public class SensorReadingEndpoints {
     @GetMapping("/{id}")
     public SensorReading getSensorReading(@PathVariable Long id){
         return this.sensorReadingService.findById(id).get();
+    }
+
+    @GetMapping("/by-type/{inputType}")
+    public List<SensorReading> getSensorReadingsByType(
+            @PathVariable InputType inputType) {
+        return this
+                .sensorReadingService
+                .findBySensorInputTypeOrderByTimeDesc(inputType);
     }
 
     @GetMapping("/gteq/{value}")
