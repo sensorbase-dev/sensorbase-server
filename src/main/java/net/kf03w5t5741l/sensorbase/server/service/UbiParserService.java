@@ -93,6 +93,8 @@ public class UbiParserService {
                     time
             );
             this.sensorReadingService.save(sensorReading);
+            sensor.addSensorReading(sensorReading);
+            this.sensorService.save(sensor);
             System.out.println("SensorReading saved!");
         }
     }

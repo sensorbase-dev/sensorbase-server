@@ -1,5 +1,6 @@
 package net.kf03w5t5741l.sensorbase.server.api.sensor;
 
+import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import net.kf03w5t5741l.sensorbase.server.service.SensorService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/sensors")
@@ -31,6 +33,21 @@ public class SensorEndpoints {
     @GetMapping("/{id}")
     public Sensor readSensor(@PathVariable Long id) {
         return this.sensorService.findById(id).get();
+    }
+
+    @GetMapping("/{id}/sensor-readings")
+    public Set<SensorReading> getSensorReadings(@PathVariable Long id) {
+        Optional<Sensor> sensorOptional = this
+                .sensorService
+                .findById(id);
+        if (!sensorOptional.isPresent()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid sensorId."
+            );
+        }
+        Sensor sensor = sensorOptional.get();
+        return sensor.getSensorReadings();
     }
 
     @PostMapping

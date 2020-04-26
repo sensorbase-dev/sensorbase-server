@@ -108,6 +108,8 @@ public class CayenneLppService {
 
             SensorReading sr = new SensorReading(sensor, value, time);
             this.sensorReadingService.save(sr);
+            sensor.addSensorReading(sr);
+            this.sensorService.save(sensor);
         }
     }
 
