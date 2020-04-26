@@ -62,6 +62,9 @@ public class UbiParserService {
         for (short componentNumber = 0;
              componentNumber < ubiInputTypes.size();
              componentNumber++) {
+            if (values[componentNumber] == 0.0f) {
+                continue;
+            }
 
             Sensor sensor = null;
             Optional<Sensor> sensorOptional = this
