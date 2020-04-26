@@ -59,7 +59,7 @@ public class UbiParserService {
         );
         float[] values = uplink.getFields();
 
-        for (short componentNumber = 1;
+        for (short componentNumber = 0;
              componentNumber <= ubiInputTypes.size();
              componentNumber++) {
 
@@ -86,7 +86,7 @@ public class UbiParserService {
 
             SensorReading sensorReading = new SensorReading(
                     sensor,
-                    new Float(values[componentNumber - 1]),
+                    new Float(values[componentNumber]),
                     time
             );
             this.sensorReadingService.save(sensorReading);
