@@ -1,11 +1,10 @@
 package net.kf03w5t5741l.sensorbase.server.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 public class UbiBotUplink {
@@ -15,6 +14,8 @@ public class UbiBotUplink {
 
     private int channelId;
     private Instant timestamp;
+
+    private float[] fields;
 
     private float field1;
     private float field2;
@@ -139,4 +140,13 @@ public class UbiBotUplink {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public float[] getFields() {
+        return this.fields;
+    }
+
+    public void setFields(float[] fields) {
+        this.fields = fields;
+    }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -23,7 +24,7 @@ public class TtnUplinkService {
     private CayenneLppService cayenneLppService;
 
     public TtnUplink save(TtnUplink uplink) {
-        List<SensorReading> sensorReadings = this.cayenneLppService.parse(uplink);
+        Set<SensorReading> sensorReadings = this.cayenneLppService.parse(uplink);
         for (SensorReading sr : sensorReadings) {
             this.sensorReadingService.save(sr);
         }

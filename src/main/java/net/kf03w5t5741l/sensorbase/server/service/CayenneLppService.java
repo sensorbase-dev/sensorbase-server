@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CayenneLppService {
@@ -24,7 +21,7 @@ public class CayenneLppService {
     @Autowired
     private SensorService sensorService;
 
-    public List<SensorReading> parse(TtnUplink uplink) {
+    public Set<SensorReading> parse(TtnUplink uplink) {
         byte[] payloadRaw = uplink.getPayloadRaw();
         long hardwareUid = Long.parseLong(uplink.getHardwareSerial(), 16);
         String devId = uplink.getDevId();
@@ -50,7 +47,7 @@ public class CayenneLppService {
                     .save(newDevice);
         }
 
-        List<SensorReading> sensorReadings = new ArrayList<SensorReading>();
+        Set<SensorReading> sensorReadings = new HashSet<SensorReading>();
 
         // Store the CayenneLPP payload in a ByteBuffer
         ByteBuffer buffer = ByteBuffer.wrap(payloadRaw);
