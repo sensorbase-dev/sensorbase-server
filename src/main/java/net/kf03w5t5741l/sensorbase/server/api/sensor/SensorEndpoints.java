@@ -12,8 +12,8 @@ import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.service.SensorService;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/sensors")
@@ -36,7 +36,7 @@ public class SensorEndpoints {
     }
 
     @GetMapping("/{id}/sensor-readings")
-    public Set<SensorReading> getSensorReadings(@PathVariable Long id) {
+    public List<SensorReading> getSensorReadings(@PathVariable Long id) {
         Optional<Sensor> sensorOptional = this
                 .sensorService
                 .findById(id);

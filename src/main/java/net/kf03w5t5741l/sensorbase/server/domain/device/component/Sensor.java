@@ -5,15 +5,15 @@ import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Sensor extends DeviceComponent {
     private InputType inputType;
 
     @OneToMany
-    private Set<SensorReading> sensorReadings = new HashSet<SensorReading>();
+    private List<SensorReading> sensorReadings = new ArrayList<SensorReading>();
 
     public InputType getInputType() {
         return this.inputType;
@@ -24,12 +24,15 @@ public class Sensor extends DeviceComponent {
     }
 
     @JsonIgnore
-    public Set<SensorReading> getSensorReadings() {
+    public List<SensorReading> getSensorReadings() {
+        this.sensorReadings.sort(
+                (sr1, sr2) -> sr1.getTime().compareTo(sr2.getTime())
+        );
         return sensorReadings;
     }
 
     @JsonIgnore
-    public void setSensorReadings(Set<SensorReading> sensorReadings) {
+    public void setSensorReadings(List<SensorReading> sensorReadings) {
         this.sensorReadings = sensorReadings;
     }
 
