@@ -92,9 +92,9 @@ public class UbiParserService {
                     new Float(values[componentNumber]),
                     time
             );
-            this.sensorReadingService.save(sensorReading);
+            sensorReading = this.sensorReadingService.save(sensorReading);
             sensor.addSensorReading(sensorReading);
-            this.sensorService.save(sensor);
+            sensor = this.sensorService.save(sensor);
             System.out.println("SensorReading saved!");
         }
     }

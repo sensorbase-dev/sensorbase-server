@@ -27,6 +27,7 @@ public class Sensor extends DeviceComponent {
         return sensorReadings;
     }
 
+    @JsonIgnore
     public void setSensorReadings(Set<SensorReading> sensorReadings) {
         this.sensorReadings = sensorReadings;
     }
