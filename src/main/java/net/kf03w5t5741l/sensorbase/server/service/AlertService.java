@@ -35,6 +35,7 @@ public class AlertService {
     }
 
     public void trigger(Alert alert, Number value) {
+        /*
         System.out.println("Trigger warning!");
         System.out.println(alert.getSensor().getInputType().name()
                 + " was "
@@ -43,5 +44,7 @@ public class AlertService {
                 + alert.getThreshold()
                 + ": "
                 + value);
+
+         */
     }
 }

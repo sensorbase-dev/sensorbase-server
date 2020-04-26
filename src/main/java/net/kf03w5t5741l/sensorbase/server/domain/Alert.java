@@ -18,7 +18,7 @@ public class Alert {
     private Sensor sensor;
 
     private double threshold;
-    private AlertCondition condition;
+    private AlertCondition alertCondition;
 
     public Long getAlertId() {
         return alertId;
@@ -52,11 +52,11 @@ public class Alert {
         this.threshold = threshold;
     }
 
-    public AlertCondition getCondition() {
-        return condition;
+    public AlertCondition getAlertCondition() {
+        return alertCondition;
     }
 
-    public void setCondition(AlertCondition condition) {
-        this.condition = condition;
+    public void setAlertCondition(AlertCondition alertCondition) {
+        this.alertCondition = alertCondition;
     }
 }

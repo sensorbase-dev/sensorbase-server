@@ -25,10 +25,10 @@ public class SensorReadingService {
     public SensorReading save(SensorReading sr) {
         List<Alert> alerts = sr.getSensor().getAlerts();
         for (Alert alert : alerts) {
-            if (alert.getCondition() == Alert.AlertCondition.ABOVE
+            if (alert.getAlertCondition() == Alert.AlertCondition.ABOVE
                     && sr.getValue().doubleValue() > alert.getThreshold()) {
                 this.alertService.trigger(alert, sr.getValue());
-            } else if (alert.getCondition() == Alert.AlertCondition.BELOW
+            } else if (alert.getAlertCondition() == Alert.AlertCondition.BELOW
                     && sr.getValue().doubleValue() < alert.getThreshold()) {
                 this.alertService.trigger(alert, sr.getValue());
             }
