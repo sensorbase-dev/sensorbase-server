@@ -3,6 +3,7 @@ package net.kf03w5t5741l.sensorbase.server.service;
 import java.util.List;
 import java.util.Optional;
 
+import net.kf03w5t5741l.sensorbase.server.domain.Alert;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.persistence.SensorReadingRepository;
@@ -18,8 +19,21 @@ public class SensorReadingService {
     @Autowired
     private SensorReadingRepository sensorReadingRepository;
 
-    public SensorReading save(SensorReading sensorReading) {
-        return this.sensorReadingRepository.save(sensorReading);
+    @Autowired
+    private AlertService alertService;
+
+    public SensorReading save(SensorReading sr) {
+        List<Alert> alerts = sr.getSensor().getAlerts();
+        for (Alert alert : alerts) {
+            if (alert.getCondition() == Alert.AlertCondition.ABOVE
+                    && sr.getValue().doubleValue() > alert.getThreshold()) {
+                this.alertService.trigger(alert, sr.getValue());
+            } else if (alert.getCondition() == Alert.AlertCondition.BELOW
+                    && sr.getValue().doubleValue() < alert.getThreshold()) {
+                this.alertService.trigger(alert, sr.getValue());
+            }
+        }
+        return this.sensorReadingRepository.save(sr);
     }
 
     public Optional<SensorReading> findById(Long id) {

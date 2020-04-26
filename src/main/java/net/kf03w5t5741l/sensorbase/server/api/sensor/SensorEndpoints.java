@@ -1,7 +1,9 @@
 package net.kf03w5t5741l.sensorbase.server.api.sensor;
 
+import net.kf03w5t5741l.sensorbase.server.domain.Alert;
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
+import net.kf03w5t5741l.sensorbase.server.service.AlertService;
 import net.kf03w5t5741l.sensorbase.server.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ public class SensorEndpoints {
     private SensorService sensorService;
 
     @Autowired
+    private AlertService alertService;
+
+    @Autowired
     private DeviceService deviceService;
 
     @GetMapping()
@@ -37,17 +42,25 @@ public class SensorEndpoints {
 
     @GetMapping("/{id}/sensor-readings")
     public List<SensorReading> getSensorReadings(@PathVariable Long id) {
-        Optional<Sensor> sensorOptional = this
-                .sensorService
-                .findById(id);
-        if (!sensorOptional.isPresent()) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Invalid sensorId."
-            );
-        }
-        Sensor sensor = sensorOptional.get();
+        Sensor sensor = this.findSensorByIdHelper(id);
         return sensor.getSensorReadings();
+    }
+
+    @GetMapping("/{id}/alerts")
+    public List<Alert> getAlerts(@PathVariable Long id) {
+        Sensor sensor = this.findSensorByIdHelper(id);
+        return sensor.getAlerts();
+    }
+
+    @PostMapping("/{id}/alerts")
+    public Alert addAlert(@PathVariable Long id,
+                          @RequestBody Alert alert) {
+        Sensor sensor = this.findSensorByIdHelper(id);
+        alert.setSensor(sensor);
+        alert = this.alertService.save(alert);
+        sensor.addAlert(alert);
+        sensor = this.sensorService.save(sensor);
+        return alert;
     }
 
     @PostMapping
@@ -90,4 +103,16 @@ public class SensorEndpoints {
         this.sensorService.deleteAll();
     }
 
+    public Sensor findSensorByIdHelper(Long sensorId) {
+        Optional<Sensor> sensorOptional = this
+                .sensorService
+                .findById(sensorId);
+        if (!sensorOptional.isPresent()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid sensorId."
+            );
+        }
+        return sensorOptional.get();
+    }
 }
