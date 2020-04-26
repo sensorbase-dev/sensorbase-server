@@ -7,12 +7,14 @@ import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
+@Transactional
 public class UbiParserService {
     @Autowired
     private DeviceService deviceService;
@@ -57,8 +59,9 @@ public class UbiParserService {
         );
         float[] values = uplink.getFields();
 
-        for (short i = 0; i < values.length; i++) {
-            short componentNumber = (short) (i + 1);
+        for (short componentNumber = 1;
+             componentNumber <= ubiInputTypes.size();
+             componentNumber++) {
 
             Sensor sensor = null;
             Optional<Sensor> sensorOptional = this
@@ -83,7 +86,7 @@ public class UbiParserService {
 
             SensorReading sensorReading = new SensorReading(
                     sensor,
-                    new Float(values[i]),
+                    new Float(values[componentNumber - 1]),
                     time
             );
             this.sensorReadingService.save(sensorReading);

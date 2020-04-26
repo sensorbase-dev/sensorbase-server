@@ -9,11 +9,13 @@ import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.nio.ByteBuffer;
 import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
+@Transactional
 public class CayenneLppService {
     @Autowired
     private DeviceService deviceService;
