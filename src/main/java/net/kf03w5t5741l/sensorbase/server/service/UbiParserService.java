@@ -60,7 +60,7 @@ public class UbiParserService {
         float[] values = uplink.getFields();
 
         for (short componentNumber = 0;
-             componentNumber <= ubiInputTypes.size();
+             componentNumber < ubiInputTypes.size();
              componentNumber++) {
 
             Sensor sensor = null;
