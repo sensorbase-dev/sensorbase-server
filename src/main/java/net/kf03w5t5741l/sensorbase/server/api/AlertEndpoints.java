@@ -41,14 +41,16 @@ public class AlertEndpoints {
     @PutMapping("/{alertId}")
     public Alert putAlert(@PathVariable Long alertId,
                           @RequestBody Alert alert) {
-        Optional<Alert> alertOptional = this.alertService.findById(alertId);
-        if (!alertOptional.isPresent()) {
+        Optional<Alert> originalAlertOptional = this.alertService.findById(alertId);
+        if (!originalAlertOptional.isPresent()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Invalid alertId"
             );
         }
-        alert.setAlertId(alertOptional.get().getAlertId());
+        Alert originalAlert = originalAlertOptional.get();
+        alert.setAlertId(originalAlert.getAlertId());
+        alert.setSensor(originalAlert.getSensor());
         return this.alertService.save(alert);
     }
 
