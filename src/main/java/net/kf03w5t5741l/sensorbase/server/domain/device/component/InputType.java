@@ -13,7 +13,8 @@ public enum InputType implements ReadingType {
     ACCELEROMETER(  (byte) 0x71, (byte) 6),
     BAROMETER(      (byte) 0x73, (byte) 2),
     GYROMETER(      (byte) 0x86, (byte) 6),
-    GPS_LOCATION(   (byte) 0x88, (byte) 9);
+    GPS_LOCATION(   (byte) 0x88, (byte) 9),
+    VOLTAGE(        (byte) 0x74, (byte) 2);
 
     private byte id;
     private byte dataSize;

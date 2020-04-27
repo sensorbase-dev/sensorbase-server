@@ -9,7 +9,7 @@ public abstract class DeviceComponent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long sensorId;
+    private Long componentId;
 
     // Component's number within the physical device
     private short componentNumber;
@@ -17,12 +17,12 @@ public abstract class DeviceComponent {
     @ManyToOne
     private Device parentDevice;
 
-    public Long getSensorId() {
-        return this.sensorId;
+    public Long getComponentId() {
+        return this.componentId;
     }
 
-    public void setSensorId(Long sensorId) {
-        this.sensorId = sensorId;
+    public void setComponentId(Long componentId) {
+        this.componentId = componentId;
     }
 
     public short getComponentNumber() {

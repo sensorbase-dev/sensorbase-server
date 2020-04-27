@@ -2,8 +2,8 @@ package net.kf03w5t5741l.sensorbase.server.api.device;
 
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
+import net.kf03w5t5741l.sensorbase.server.service.DeviceService;
+import net.kf03w5t5741l.sensorbase.server.service.SensorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class DeviceSensorEndpoints {
 
     @GetMapping("/{componentNumber}")
     public Sensor getSensor(@PathVariable String hardwareUid,
-                            @PathVariable byte componentNumber) {
+                            @PathVariable short componentNumber) {
         Device parentDevice = this
                 .deviceService
                 .findByHardwareUid(hardwareUid)
@@ -74,11 +74,11 @@ public class DeviceSensorEndpoints {
 
     @DeleteMapping("/{componentNumber}")
     public boolean deleteSensor(@PathVariable String hardwareUid,
-                                @PathVariable byte componentNumber) {
+                                @PathVariable short componentNumber) {
         Device parentDevice = this.deviceService.findByHardwareUid(
                 hardwareUid).get();
         Long sensorId = this.sensorService.findByParentDeviceAndComponentNumber(
-                parentDevice, componentNumber).get().getSensorId();
+                parentDevice, componentNumber).get().getComponentId();
         return this.sensorService.deleteById(sensorId);
     }
 
@@ -90,7 +90,7 @@ public class DeviceSensorEndpoints {
                 .get()
                 .getSensors();
         for (Sensor sensor : sensorsToDelete) {
-            this.sensorService.deleteById(sensor.getSensorId());
+            this.sensorService.deleteById(sensor.getComponentId());
         }
     }
 

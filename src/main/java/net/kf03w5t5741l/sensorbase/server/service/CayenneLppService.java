@@ -1,36 +1,32 @@
 package net.kf03w5t5741l.sensorbase.server.service;
 
 import net.kf03w5t5741l.sensorbase.server.domain.SensorReading;
-import net.kf03w5t5741l.sensorbase.server.domain.TtnUplink;
+import net.kf03w5t5741l.sensorbase.server.domain.uplink.TtnUplink;
 import net.kf03w5t5741l.sensorbase.server.domain.device.Device;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.InputType;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.DeviceService;
-import net.kf03w5t5741l.sensorbase.server.service.persistence.SensorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
+@Transactional
 public class CayenneLppService {
-    public static final byte DATA_CHANNEL_SIZE = 1;
-    public static final byte DATA_TYPE_SIZE = 1;
-
     @Autowired
     private DeviceService deviceService;
 
     @Autowired
     private SensorService sensorService;
 
-    public List<SensorReading> parse(TtnUplink uplink) {
+    @Autowired
+    private SensorReadingService sensorReadingService;
+
+    public void parseAndSave(TtnUplink uplink) {
         byte[] payloadRaw = uplink.getPayloadRaw();
         long hardwareUid = Long.parseLong(uplink.getHardwareSerial(), 16);
         String devId = uplink.getDevId();
@@ -56,8 +52,6 @@ public class CayenneLppService {
                     .save(newDevice);
         }
 
-        List<SensorReading> sensorReadings = new ArrayList<SensorReading>();
-
         // Store the CayenneLPP payload in a ByteBuffer
         ByteBuffer buffer = ByteBuffer.wrap(payloadRaw);
 
@@ -65,6 +59,7 @@ public class CayenneLppService {
         while (buffer.hasRemaining()) {
             System.out.println("ByteBuffer position: " + buffer.position());
             int dataPointStart = buffer.position();
+            // componentNumber = 0x[(byte for data channel), (byte for data type)]
             short componentNumber = buffer.getShort();
             System.out.println("ByteBuffer position after reading short: " + buffer.position());
 
@@ -86,7 +81,7 @@ public class CayenneLppService {
                 sensor = this.sensorService.save(newSensor);
 
                 device.addSensor(sensor);
-                this.deviceService.save(device);
+                device = this.deviceService.save(device);
             }
 
             // Skip over accelerometer readings for now -
@@ -109,13 +104,22 @@ public class CayenneLppService {
             rawValueBuffer.position(rawValueBuffer.capacity() - rawValue.length);
             rawValueBuffer = rawValueBuffer.put(rawValue);
             System.out.println("rawValueBuffer: " + Arrays.toString(rawValueBuffer.array()));
-            Integer value = rawValueBuffer.getInt(0);
+            Integer intValue = rawValueBuffer.getInt(0);
+
+            Number value = null;
+            switch(sensor.getInputType()) {
+                case TEMPERATURE:
+                    value = new Float(intValue / 10.0f);
+                    break;
+                default:
+                    value = intValue;
+            }
 
             SensorReading sr = new SensorReading(sensor, value, time);
-            sensorReadings.add(sr);
+            sr = this.sensorReadingService.save(sr);
+            sensor.addSensorReading(sr);
+            sensor = this.sensorService.save(sensor);
         }
-
-        return sensorReadings;
     }
 
     public InputType parseInputType(short componentNumber) {
