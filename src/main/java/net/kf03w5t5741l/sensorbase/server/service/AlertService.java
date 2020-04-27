@@ -65,13 +65,13 @@ public class AlertService {
         alertEmail.setRecipientAddress(alert.getEmailAddress());
         alertEmail.setSenderAddress("sensorbase@kf03w5t5741l.net");
         alertEmail.setSubject("SensorBase alert - "
-                + alert.getSensor().getInputType()
+                + alert.getSensor().getInputType().name()
                 + " #"
                 + alert.getSensor().getComponentNumber()
                 + " on "
                 + alert.getSensor().getParentDevice().getName());
         alertEmail.setMessage("SensorBase alert\n"
-                + alert.getSensor().getInputType()
+                + alert.getSensor().getInputType().name()
                 + " #"
                 + alert.getSensor().getComponentNumber()
                 + " on "
