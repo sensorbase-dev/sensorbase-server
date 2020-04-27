@@ -58,8 +58,6 @@ public class SensorEndpoints {
         Sensor sensor = this.findSensorByIdHelper(id);
         alert.setSensor(sensor);
         alert = this.alertService.save(alert);
-        sensor.addAlert(alert);
-        sensor = this.sensorService.save(sensor);
         return alert;
     }
 

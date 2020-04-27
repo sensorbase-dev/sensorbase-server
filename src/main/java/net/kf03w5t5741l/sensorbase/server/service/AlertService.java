@@ -1,6 +1,7 @@
 package net.kf03w5t5741l.sensorbase.server.service;
 
 import net.kf03w5t5741l.sensorbase.server.domain.Alert;
+import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.persistence.AlertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,15 @@ public class AlertService {
     @Autowired
     private AlertRepository alertRepository;
 
+    @Autowired
+    private SensorService sensorService;
+
     public Alert save(Alert alert) {
-        return this.alertRepository.save(alert);
+        Sensor sensor = alert.getSensor();
+        alert = this.alertRepository.save(alert);
+        sensor.addAlert(alert);
+        this.sensorService.save(sensor);
+        return alert;
     }
 
     public Iterable<Alert> findAll() {
@@ -27,10 +35,18 @@ public class AlertService {
     }
 
     public void deleteById(Long alertId) {
+        Alert alert = this.alertRepository.findById(alertId).get();
+        Sensor sensor = alert.getSensor();
+        sensor.getAlerts().remove(alert);
+        this.sensorService.save(sensor);
         this.alertRepository.deleteById(alertId);
     }
 
     public void deleteAll() {
+        for (Sensor sensor : this.sensorService.findAll()) {
+            sensor.getAlerts().clear();
+            this.sensorService.save(sensor);
+        }
         this.alertRepository.deleteAll();
     }
 
