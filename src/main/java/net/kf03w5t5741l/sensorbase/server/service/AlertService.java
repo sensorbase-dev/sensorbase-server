@@ -1,12 +1,14 @@
 package net.kf03w5t5741l.sensorbase.server.service;
 
 import net.kf03w5t5741l.sensorbase.server.domain.Alert;
+import net.kf03w5t5741l.sensorbase.server.domain.Email;
 import net.kf03w5t5741l.sensorbase.server.domain.device.component.Sensor;
 import net.kf03w5t5741l.sensorbase.server.persistence.AlertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -56,6 +58,27 @@ public class AlertService {
     }
 
     public void trigger(Alert alert, Number value) {
+        Email alertEmail = new Email();
+        alertEmail.setRecipientAddress(alert.getEmailAddress());
+        alertEmail.setSenderAddress("sensorbase@kf03w5t5741l.net");
+        alertEmail.setSubject("SensorBase alert - "
+                + alert.getSensor().getInputType()
+                + " #"
+                + alert.getSensor().getComponentNumber()
+                + " on "
+                + alert.getSensor().getParentDevice().getName());
+        alertEmail.setMessage("SensorBase alert\n"
+                + alert.getSensor().getInputType()
+                + " #"
+                + alert.getSensor().getComponentNumber()
+                + " on "
+                + alert.getSensor().getParentDevice().getName()
+                + " was below "
+                + alert.getThreshold()
+                + " at "
+                + LocalDateTime.now()
+                + "."
+        );
         System.out.println("Trigger warning!");
         System.out.println(alert.getSensor().getInputType().name()
                 + " was "
