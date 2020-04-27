@@ -51,6 +51,7 @@ public class AlertEndpoints {
         Alert originalAlert = originalAlertOptional.get();
         alert.setAlertId(originalAlert.getAlertId());
         alert.setSensor(originalAlert.getSensor());
+        this.alertService.deleteById(originalAlert.getAlertId());
         return this.alertService.save(alert);
     }
 
