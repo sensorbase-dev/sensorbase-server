@@ -26,6 +26,11 @@ public class AlertService {
         return alert;
     }
 
+    public Alert update(Alert alert) {
+        this.deleteById(alert.getAlertId());
+        return this.save(alert);
+    }
+
     public Iterable<Alert> findAll() {
         return this.alertRepository.findAll();
     }
