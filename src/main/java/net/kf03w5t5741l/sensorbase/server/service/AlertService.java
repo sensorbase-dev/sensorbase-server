@@ -76,7 +76,9 @@ public class AlertService {
                 + alert.getSensor().getComponentNumber()
                 + " on "
                 + alert.getSensor().getParentDevice().getName()
-                + " was below "
+                + " was "
+                + alert.getAlertCondition().name()
+                + " "
                 + alert.getThreshold()
                 + " at "
                 + LocalDateTime.now()
