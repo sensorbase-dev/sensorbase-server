@@ -20,6 +20,9 @@ public class AlertService {
     @Autowired
     private SensorService sensorService;
 
+    @Autowired
+    private EmailService emailService;
+
     public Alert save(Alert alert) {
         Sensor sensor = alert.getSensor();
         alert = this.alertRepository.save(alert);
@@ -79,6 +82,8 @@ public class AlertService {
                 + LocalDateTime.now()
                 + "."
         );
+        this.emailService.sendMail(alertEmail);
+
         System.out.println("Trigger warning!");
         System.out.println(alert.getSensor().getInputType().name()
                 + " was "
