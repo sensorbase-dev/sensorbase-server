@@ -7,6 +7,10 @@ Simple IoT platform for collecting sensor data. The project goal is to support a
 - CayenneLPP support for device self-registration and data transmission
 - support for LoRaWAN devices via The Things Network HTTP integration
 
+## Screenshots
+![](docs/images/sensorbase-screenshot-components.png)
+![](docs/images/sensorbase-screenshot-temperature.png)
+
 ## To do
 - request authentication
 - user management
