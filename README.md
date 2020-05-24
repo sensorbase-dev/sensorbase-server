@@ -8,8 +8,8 @@ Simple IoT platform for collecting sensor data. The project goal is to support a
 - support for LoRaWAN devices via The Things Network HTTP integration
 
 ## Screenshots
-![](docs/images/sensorbase-screenshot-components.png)
-![](docs/images/sensorbase-screenshot-temperature.png)
+![](docs/images/sensorbase-screenshot-components.PNG)
+![](docs/images/sensorbase-screenshot-temperature.PNG)
 
 ## To do
 - request authentication
